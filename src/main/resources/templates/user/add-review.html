@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/stars.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+<title>Add A Review</title>
+
+</head>
+
+<body>
+	<header>
+		<h1>Add A Review!</h1>
+
+	</header>
+
+	<form name="form" action="#" th:action="@{/submitReview}" method="post"
+		th:object="${book}">
+
+		<input type="text" th:field="*{id}" hidden=>
+		<p>
+			<textarea name="review" required></textarea>
+		</p>
+		
+		<p>
+			<div class ="stars">
+				<input class="star star-5" id="star-5" type="radio" value="5" name="stars" required/>
+				<label class="star star-5" for="star-5"></label>
+				<input class="star star-4" id="star-4" type="radio" value="4" name="stars" />
+				<label class="star star-4" for="star-4"></label>
+				<input class="star star-3" id="star-3" type="radio" value="3" name="stars" />
+				<label class="star star-3" for="star-3"></label>
+				<input class="star star-2" id="star-2" type="radio" value="2" name="stars" />
+				<label class="star star-2" for="star-2"></label>
+				<input class="star star-1" id="star-1" type="radio" value="1" name="stars" />
+				<label class="star star-1" for="star-1"></label>
+			</div>
+		</p>
+			
+		<p>
+			<input type="submit" value="Add Review">
+		</p>
+	</form>
+
+	<form style="border: none;" th:action="@{/viewBook/}+*{id}"
+		th:object="${book}" method="get">
+		<h2>
+			<input type="submit" value="Go Back" class="top-left">
+		</h2>
+		<h2>
+			<input type="submit" value="Logout" class="top-right"
+				formaction="/logout" formmethod="post">
+		</h2>
+	</form>
+</body>
+</html>

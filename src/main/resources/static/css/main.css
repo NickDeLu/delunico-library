@@ -1,0 +1,122 @@
+header {
+	background-color: rgb(1, 55, 102);
+	text-align: center;
+	padding: 40px 20px 20px 20px;
+}
+
+.error {
+	color: red;
+	font-weight: bold;
+	font-size: 20px;
+	font-family: arial;
+}
+.displayStars{
+	background-color:gold;
+	height:20px;
+	z-index:100;
+	position:absolute;
+	left:0;
+}
+table td:nth-child(3) img{
+	width:100%;
+	z-index:110;
+	position:absolute;
+	left:0;
+	top:1.5;
+	
+}
+table td:nth-child(3){
+	width:100px;
+	position:relative;
+	padding:0px;
+}
+table td:nth-child(3) h3{
+	margin:0px 0px 10px 0px;	
+}
+body {
+	margin: 0px;
+}
+
+textarea {
+	min-height: 100px;
+	width: 50%
+}
+
+form input[type="text"], input[type="password"] {
+	border-radius: 20px;
+	outline: none;
+}
+
+th {
+	background-color: rgb(13, 41, 77);
+	font-size: 25px;
+}
+
+h1, th {
+	margin: 30px 30px 30px 30px;
+	font-family: arial;
+	font-weight: bold;
+	color: white;
+}
+
+h2, h3 {
+	font-family: arial;
+	color: rgb(1, 55, 102);
+}
+
+input, select, a {
+	background-color: rgb(13, 41, 77);
+	color: white;
+	padding: 10px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+a {
+	line-height: 300%;
+}
+
+table {
+	border: 10px solid rgb(13, 41, 77);
+	width: 100%;
+}
+
+input[type="submit"] {
+	border: none;
+	font-family: arial;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.top-left {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+}
+
+.top-right {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+form {
+	border: 10px solid rgb(13, 41, 77);
+	text-align: center;
+	margin: 5px;
+}
+
+td:nth-child(1n), th:nth-child(1n) {
+	border-left: none;
+	border-right: none;
+	border-top: none;
+}
+
+table td, table th {
+	padding: 10px 20px 10px 20px;
+	border: 2px solid rgb(13, 41, 77);
+}
+
+.center-container {
+	text-align: center;
+}

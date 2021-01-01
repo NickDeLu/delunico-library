@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/main.css">
+<title>Reviews!</title>
+</head>
+<body>
+	<header>
+		<div th:if="${reviews.empty}">
+			<h1>There are no reviews!</h1>
+		</div>
+		<div th:unless="${reviews.empty}">
+			<h1 th:text="|Reviews for ${book.title}|">Reviews!</h1>
+		</div>
+
+		<div th:unless="${userName}">
+			<h1>
+				Want to leave a review?<a href="#" th:href="@{/login}">Login</a>
+			</h1>
+		</div>
+
+
+		<div sec:authorize="hasAnyRole('USER','MANAGER')">
+			<h2>
+				<a href="#" th:href="@{/user/addReview/} +${book.id}">Add Review</a>
+			</h2>
+			<form action="#" th:action="@{/logout}" method="post"
+				style="border: none;">
+				<input type="submit" value="Logout" class="top-right">
+			</form>
+		</div>
+		<form style="border: none;">
+			<h2>
+				<input type="submit" value="Home" class="top-left" formaction="/"
+					formmethod="get">
+			</h2>
+		</form>
+
+	</header>
+
+	<div th:if="${message}" class="error">
+		<p th:text="${message}" />
+	</div>
+
+
+	<div th:unless="${reviews.empty}" class="center-container">
+
+		<table CELLSPACING=0>
+
+			<tr>
+				<th>Reviews</th>
+			</tr>
+
+			<tr th:each="review : ${reviews}">
+				<td><h3 th:text="${review.text}">it was great</h3></td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+</html>

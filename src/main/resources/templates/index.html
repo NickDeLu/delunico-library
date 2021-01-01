@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/main.css">
+<title>Home</title>
+
+</head>
+<body>
+	<header>
+		<div sec:authorize="hasAnyRole('USER','MANAGER')">
+			<h1 th:text="|Welcome to the Library Database ${userName}|">Welcome!</h1>
+			<form action="#" th:action="@{/logout}" method="post"
+				style="border: none;">
+				<input type="submit" value="Logout" class="top-right">
+			</form>
+		</div>
+
+		<div sec:authorize="hasRole('ROLE_MANAGER')">
+			<h2>
+				<a href="#" th:href="@{/admin/addPage}">Add a Book</a>
+			</h2>
+		</div>
+
+		<div th:unless="${roles}">
+			<h1>Welcome to the Library Database</h1>
+			<h2>
+				<a href="#" th:href="@{/login}">Login</a>
+			</h2>
+		</div>
+
+		<div th:if="${message}" class="error">
+			<p th:text="${message}" />
+		</div>
+	</header>
+
+	<div th:if="${books.empty}">
+		<h2 th:text="|There are no books!|">The database is empty!</h2>
+	</div>
+
+	<div th:unless="${books.empty}" class="center-container">
+
+		<table CELLSPACING=0>
+
+			<tr>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Rating</th>
+				<th>Reviews</th>
+			</tr>
+
+			<tr th:each="book : ${books}">
+				<td><h3 th:text="${book.title}">Kill Iron Man</h3></td>
+				<td><h3 th:text="${book.Author}">Armored Suit</h3></td>
+				<td><h3 th:text="|${book.aveStars} stars|">5 stars</h3>
+				<img src ="/img/stars.png">
+				<div class ="displayStars" th:style="|width: calc(20% * ${book.aveStars})|">
+				</div>
+				<td><h3>
+						<a href="" th:href="@{/viewBook/} + ${book.id}">view</a>
+					</h3></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

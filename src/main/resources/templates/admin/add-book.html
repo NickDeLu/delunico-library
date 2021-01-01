@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Add A Book</title>
+<link rel="stylesheet" href="/css/main.css">
+<script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+
+</head>
+
+<body>
+	<header>
+		<h1>Add A Book!</h1>
+
+		<div id="error" class="error">
+			<h2></h2>
+		</div>
+	</header>
+	<form name="form" action="#" th:action="@{/admin/addBook}"
+		method="post" onsubmit="return verify()">
+
+		<p>
+			<input type="text" name="title" placeholder="Enter Title" required>
+		</p>
+
+		<p>
+			<input type="text" name="author" placeholder="Enter Author" required>
+		</p>
+
+		<p>
+			<input type="submit" value="Add Book">
+		</p>
+
+	</form>
+	<form style="border: none;">
+		<h2>
+			<input type="submit" value="Home" class="top-left" formaction="/"
+				formmethod="get">
+		</h2>
+		<h2>
+			<input type="submit" value="Logout" class="top-right"
+				formaction="/logout" formmethod="post">
+		</h2>
+	</form>
+</body>
+</html>
