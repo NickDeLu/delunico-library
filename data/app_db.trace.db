@@ -1,9 +1,12 @@
-2021-01-02 01:26:06 jdbc[3]: exception
+2021-01-02 03:02:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER_TABLE" already exists; SQL statement:
+create table user_table( username varchar_ignorecase(100) not null primary key, password varchar_ignorecase(100) not null, enabled boolean not null ) [42101-200]
+2021-01-02 03:03:36 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found; SQL statement:
 insert into users (username, password, enabled) values (?,?,?) [42102-200]
-2021-01-02 01:26:38 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" already exists; SQL statement:
-create table users( username varchar_ignorecase(100) not null primary key, password varchar_ignorecase(100) not null, enabled boolean not null ) [42101-200]
-2021-01-02 01:27:30 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" already exists; SQL statement:
-create table users( username varchar_ignorecase(100) not null primary key, password varchar_ignorecase(100) not null, enabled boolean not null ) [42101-200]
+2021-01-02 03:04:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found; SQL statement:
+insert into users (username, password, enabled) values (?,?,?) [42102-200]
+2021-01-02 03:04:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found; SQL statement:
+insert into users (username, password, enabled) values (?,?,?) [42102-200]

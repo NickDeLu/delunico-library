@@ -64,10 +64,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		auth.jdbcAuthentication()
 		.dataSource(dataSource)
 		.usersByUsernameQuery(
-                "select username,password, enabled from users where username=?")
+                "select username,password, enabled from user_table where username=?")
         .authoritiesByUsernameQuery(
                 "select username, authority from authorities where username=?")
 		.passwordEncoder(passwordEncoder);//auto injected at the top of page
-
+		System.out.println(passwordEncoder.encode("bunny"));
+		System.out.println(passwordEncoder.encode("duck"));
 	}
 }
