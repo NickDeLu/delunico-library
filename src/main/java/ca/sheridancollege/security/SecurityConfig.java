@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		auth.jdbcAuthentication()
 		.dataSource(dataSource)
 		.usersByUsernameQuery(
-                "select username,password, enabled from user_table where username=?")
+                "select username,password, enabled from users where username=?")
         .authoritiesByUsernameQuery(
                 "select username, role from user_roles where username=?")
 		.passwordEncoder(passwordEncoder)//auto injected at the top of page
