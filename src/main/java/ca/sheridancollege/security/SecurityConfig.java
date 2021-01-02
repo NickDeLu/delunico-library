@@ -63,7 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication()
 		.dataSource(dataSource)
-		.withDefaultSchema()
+		.usersByUsernameQuery(
+                "select username,password, enabled from user_table where username=?")
+        .authoritiesByUsernameQuery(
+                "select username, role from user_roles where username=?")
 		.passwordEncoder(passwordEncoder)//auto injected at the top of page
 		.withUser("bugs").password(passwordEncoder.encode("bunny")).roles("USER")
 		.and()
