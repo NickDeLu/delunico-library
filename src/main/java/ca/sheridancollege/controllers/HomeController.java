@@ -54,7 +54,7 @@ public class HomeController {
 			}
 			String encodedPassword = passwordEncoder.encode(password);
 			User user = new User(userName, encodedPassword, authorityList);
-			jdbcUserDetailsManager.createUser(user);
+			da.addUser(user);
 			model.addAttribute("message", "User successfully added");
 
 		} catch (Exception e) {

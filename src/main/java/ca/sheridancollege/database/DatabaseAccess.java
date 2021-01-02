@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
 import ca.sheridancollege.beans.Book;
@@ -146,6 +147,25 @@ public class DatabaseAccess {
 
 			jdbc.update(query, namedParameters);
 			
+	}
+	public void addUser(User user) {
+		
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		String query = 
+				"INSERT INTO user_table (username,password,enabled) "
+				+ "VALUES (:username, :password, :enabled)"
+				+ "INSERT INTO authorities(username, authority) "
+				+ "VALUES(:username, :authority)";
+		
+		namedParameters
+			.addValue("username", user.getUsername())
+			.addValue("password", user.getPassword())
+			.addValue("enabled", 1)
+			.addValue("authority", user.getAuthorities());
+		
+
+		jdbc.update(query, namedParameters);
+		
 	}
 		
 	
