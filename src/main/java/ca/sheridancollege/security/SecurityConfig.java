@@ -67,9 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "select username,password, enabled from users where username=?")
         .authoritiesByUsernameQuery(
                 "select username, authority from authorities where username=?")
-		.passwordEncoder(passwordEncoder)//auto injected at the top of page
-		.withUser("bugs").password(passwordEncoder.encode("bunny")).roles("USER")
-		.and()
-		.withUser("daffy").password(passwordEncoder.encode("duck")).roles("USER","MANAGER");
+		.passwordEncoder(passwordEncoder);//auto injected at the top of page
+
 	}
 }
