@@ -63,7 +63,7 @@ public class DatabaseAccess {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		
 		String query = "UPDATE books SET aveStars = "
-				+ "(SELECT ROUND( AVG( stars ), 1 ) FROM reviews "
+				+ "(SELECT CAST(AVG(stars) as DECIMAL(10,1)) FROM reviews "
 				+ "WHERE reviews.bookId = books.id) "
 				+ "WHERE books.id in (SELECT bookId FROM reviews)";
 		
