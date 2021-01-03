@@ -154,8 +154,9 @@ public class DatabaseAccess {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		String query = 
 				"INSERT INTO user_table (username,password,enabled) "
-				+ "VALUES (:username, :password, :enabled)"
-				+ "INSERT INTO authorities(username, authority) "
+				+ "VALUES (:username, :password, :enabled)";
+		String query2 =
+				"INSERT INTO authorities(username, authority) "
 				+ "VALUES(:username, :authority)";
 		
 		namedParameters
@@ -164,8 +165,10 @@ public class DatabaseAccess {
 			.addValue("enabled", 1)
 			.addValue("authority", user.getAuthorities());
 		
-
 		jdbc.update(query, namedParameters);
+		System.out.println("adding user to db");
+		jdbc.update(query2, namedParameters);
+		System.out.println("adding user authority to db");
 		
 	}
 		
