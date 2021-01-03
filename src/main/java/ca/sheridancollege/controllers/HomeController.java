@@ -91,6 +91,7 @@ public class HomeController {
 	 */
 	@GetMapping("/")
 	public String goHome(Authentication auth, Model model) {
+		
 		if (auth != null) {
 			String userName = auth.getName();
 			List<String> roles = new ArrayList<>();

@@ -63,7 +63,7 @@ public class DatabaseAccess {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		
 		String query = "UPDATE books SET aveStars = "
-				+ "(SELECT CAST(AVG(stars) AS DECIMAL(2,2)) FROM reviews "
+				+ "(SELECT AVG(stars) FROM reviews "
 				+ "WHERE reviews.bookId = books.id) "
 				+ "WHERE books.id in (SELECT bookId FROM reviews)";
 		
@@ -104,6 +104,7 @@ public class DatabaseAccess {
 		jdbc.update(query, namedParameters);
 		
 	}
+	
 	/**
 	 * This method get a specific book based on a given id
 	 * from the book table in the h2 database
