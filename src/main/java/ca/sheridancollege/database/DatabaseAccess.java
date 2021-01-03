@@ -163,7 +163,7 @@ public class DatabaseAccess {
 			.addValue("username", user.getUsername())
 			.addValue("password", user.getPassword())
 			.addValue("enabled", 1)
-			.addValue("authority", user.getAuthorities());
+			.addValue("authority", "ROLE_USER");
 		
 		jdbc.update(query, namedParameters);
 		System.out.println("adding user to db");
