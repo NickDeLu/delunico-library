@@ -156,8 +156,8 @@ public class DatabaseAccess {
 				"INSERT INTO user_table (username,password,enabled) "
 				+ "VALUES (:username, :password, :enabled)";
 		String query2 =
-				"INSERT INTO authorities(username, authority) "
-				+ "VALUES(:username, :authority)";
+				"INSERT INTO authorities (username, authority) "
+				+ "VALUES (:username, :authority)";
 		
 		namedParameters
 			.addValue("username", user.getUsername())
