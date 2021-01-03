@@ -150,7 +150,7 @@ public class DatabaseAccess {
 			
 	}
 	public void addUser(User user) {
-		
+		System.out.println("database access");
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		String query = 
 				"INSERT INTO user_table (username,password,enabled) "
