@@ -6,8 +6,6 @@
 <link rel="stylesheet" href="/css/main.css">
 <title>Add A User</title>
 
-<script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
-
 </head>
 
 <body>
@@ -22,8 +20,7 @@
 		</div>
 	</header>
 
-	<form name="form" action="#" th:action="@{/addUser}" method="post"
-		onsubmit="return verify()">
+	<form name="form" action="#" th:action="@{/addUser}" method="post">
 		<h2>
 			<input type="text" name="userName" placeholder="Enter Username"
 				required />
