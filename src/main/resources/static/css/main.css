@@ -1,36 +1,47 @@
-header {
+html{
 	background-color: rgb(1, 55, 102);
+}
+header {
+	
 	text-align: center;
 	padding: 40px 20px 20px 20px;
 }
-
+.background{
+	background-image:url("/img/background.jpg");
+	width:100%;
+	height:100%;
+	position:absolute;
+	opacity:0.5;
+	top:0px;
+	left:0px;
+	z-index:-1;
+}
 .error {
 	color: red;
 	font-weight: bold;
 	font-size: 20px;
 	font-family: arial;
 }
-.displayStars{
-	background-color:gold;
-	height:20px;
+.starbar{
+	background-color: rgb(20, 63, 120);
+	height:25px;
 	z-index:100;
 	position:absolute;
 	left:0;
+	width:100%
 }
-table td:nth-child(3) img{
+.starcontainer img{
 	width:100%;
 	z-index:110;
 	position:absolute;
-	left:0;
-	top:1.5;
-	
+	left:0px;
 }
-table td:nth-child(3){
-	width:100px;
+.starcontainer{
 	position:relative;
-	padding:0px;
+	padding:20px 0px 40px 0px;
+	width:115px;
 }
-table td:nth-child(3) h3{
+.starcontainer h3{
 	margin:0px 0px 10px 0px;	
 }
 body {
@@ -47,16 +58,27 @@ form input[type="text"], input[type="password"] {
 	outline: none;
 }
 
-th {
+th, .section-header {
 	background-color: rgb(13, 41, 77);
 	font-size: 25px;
+	font-family:arial;
+	font-weight: bold;
+	color: white;
 }
+tr{
+	background-color: white;
+}
+ .section-header{
+ 	padding:10px 10px 5px 10px;
+ 	text-align:center;
+ }
 
-h1, th {
-	margin: 30px 30px 30px 30px;
+h1, th{
+	margin:50px;
 	font-family: arial;
 	font-weight: bold;
 	color: white;
+	z-index:100;
 }
 
 h2, h3 {
@@ -65,7 +87,7 @@ h2, h3 {
 }
 
 input, select, a {
-	background-color: rgb(13, 41, 77);
+	background-color: rgb(20, 63, 120);
 	color: white;
 	padding: 10px;
 	text-decoration: none;
@@ -104,6 +126,7 @@ form {
 	border: 10px solid rgb(13, 41, 77);
 	text-align: center;
 	margin: 5px;
+	background-color: white;
 }
 
 td:nth-child(1n), th:nth-child(1n) {
@@ -113,10 +136,38 @@ td:nth-child(1n), th:nth-child(1n) {
 }
 
 table td, table th {
-	padding: 10px 20px 10px 20px;
 	border: 2px solid rgb(13, 41, 77);
+	padding:0px 5px 0px 5px;
 }
 
 .center-container {
 	text-align: center;
+}
+
+.book-cover{
+	width:115px;
+	height:173px;
+}
+
+section{
+	background-color:white;
+	border-left:10px solid rgb(13, 41, 77);
+	border-right:10px solid rgb(13, 41, 77);
+	padding:20px;
+}
+.flex-container{
+	display:flex;
+	flex-direction:row;
+	gap:20px;
+}
+.flex-container2{
+	display:flex;
+	flex-direction:row;
+	gap:20px;
+	min-width:500px;
+}
+@media (max-width:900px){
+	.flex-container{
+		flex-direction:column;
+	}
 }

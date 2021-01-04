@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 public class Review {
 	
 	private long id;
-	private long bookID;
+	private long bookId;
 	private String Text;
+	private String username;
+	private float stars;
 }

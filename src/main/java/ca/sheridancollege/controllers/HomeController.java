@@ -14,6 +14,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,11 +76,7 @@ public class HomeController {
 	 * @return a redirection to root "/" which then leads to home
 	 */
 	@PostMapping("admin/addBook")
-	public String addBook(@RequestParam String title, @RequestParam String author, Model model) {
-
-		Book book = new Book();
-		book.setTitle(title);
-		book.setAuthor(author);
+	public String addBook(@ModelAttribute Book book) {
 		da.addBook(book);
 		return "redirect:/";
 	}
@@ -115,9 +112,11 @@ public class HomeController {
 	 * @return a redirection to the previous review page
 	 */
 	@PostMapping("submitReview")
-	public String submitReview(@RequestParam long id, @RequestParam String review, @RequestParam double stars) {
-		da.addReview(id, review, stars);
-		return "redirect:/viewBook/" + id;
+	public String submitReview(@ModelAttribute Review review, @RequestParam String username, @RequestParam Long bookId) {
+		review.setUsername(username);
+		review.setBookId(bookId);
+		da.addReview(review);
+		return "redirect:/viewBook/" + review.getBookId();
 	}
 	/**
 	 * This method maps to the add-review template and
@@ -127,8 +126,10 @@ public class HomeController {
 	 * @return the path to access the add-review template
 	 */
 	@GetMapping("user/addReview/{bookID}")
-	public String AddReview(@PathVariable long bookID, Model model) {
+	public String AddReview(@PathVariable long bookID, Model model, Authentication auth) {
 		model.addAttribute("book", da.getBook(bookID));
+		model.addAttribute("review", new Review());
+		model.addAttribute("userName", auth.getName());
 		return "user/add-review";
 	}
 	/**
@@ -148,6 +149,7 @@ public class HomeController {
 		model.addAttribute("reviews", reviews);
 		Book book = da.getBook(bookID);
 		model.addAttribute("book", book);
+		da.aveReviews();
 		return "view-book";
 	}
 	/**
@@ -156,7 +158,8 @@ public class HomeController {
 	 * @return the path to the add-book template
 	 */
 	@GetMapping("admin/addPage")
-	public String managerIndex() {
+	public String managerIndex(Model model) {
+		model.addAttribute("book", new Book());
 		return "admin/add-book";
 	}
 	/**

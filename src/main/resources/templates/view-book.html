@@ -5,9 +5,11 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/main.css">
 <title>Reviews!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 	<header>
+		<div class ="background"></div>
 		<div th:if="${reviews.empty}">
 			<h1>There are no reviews!</h1>
 		</div>
@@ -43,18 +45,48 @@
 	<div th:if="${message}" class="error">
 		<p th:text="${message}" />
 	</div>
-
-
+	<div class="section-header">Description</div>
+	<section class ="flex-container">
+		
+		<div class ="flex-container2">
+			<img class ="book-cover" th:src="@{${book.img}}">
+			<div>
+				<h3 th:text="${book.title}"></h3>
+				<h3 th:text="|By: ${book.author}|"></h3>
+				<div class ="starcontainer">
+					<h3 th:text="|${book.aveStars} stars|">jonny937</h3>
+					<img src ="/img/stars.png">
+					<div class ="starbar" th:style="|width: calc(20% * ${book.aveStars})|"></div>
+				</div>
+			</div>
+		</div>
+	
+	
+		<h3 th:text ="${book.description}">follows the journey of Brian the snail, an adventure you'll never forget</h3>
+			
+		
+	</section>
+		
+		
+	
 	<div th:unless="${reviews.empty}" class="center-container">
-
+		
 		<table CELLSPACING=0>
 
 			<tr>
-				<th>Reviews</th>
+				<th>Review</th>
+				<th>Username</th>
+				<th>Rating</th>
 			</tr>
-
+		
 			<tr th:each="review : ${reviews}">
 				<td><h3 th:text="${review.text}">it was great</h3></td>
+				<td><h3 th:text="${review.username}">jonny937</h3></td>
+				<td class ="starcontainer"><h3 th:text="|${review.stars} stars|">5 stars</h3>
+					<img src ="/img/stars.png">
+					<div class ="starbar" th:style="|width: calc(20% * ${review.stars})|"></div>
+				</td>
+
 			</tr>
 		</table>
 	</div>

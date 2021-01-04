@@ -4,11 +4,13 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Home</title>
 
 </head>
 <body>
 	<header>
+		<div class ="background"></div>
 		<div sec:authorize="hasAnyRole('USER','MANAGER')">
 			<h1 th:text="|Welcome to the Library Database ${userName}|">Welcome!</h1>
 			<form action="#" th:action="@{/logout}" method="post"
@@ -33,6 +35,7 @@
 		<div th:if="${message}" class="error">
 			<p th:text="${message}" />
 		</div>
+		
 	</header>
 
 	<div th:if="${books.empty}">
@@ -53,13 +56,13 @@
 			<tr th:each="book : ${books}">
 				<td><h3 th:text="${book.title}">Kill Iron Man</h3></td>
 				<td><h3 th:text="${book.Author}">Armored Suit</h3></td>
-				<td><h3 th:text="|${book.aveStars} stars|">5 stars</h3>
+				<td class ="starcontainer"><h3 th:text="|${book.aveStars} stars|">5 stars</h3>
 				<img src ="/img/stars.png">
-				<div class ="displayStars" th:style="|width: calc(20% * ${book.aveStars})|">
-				</div>
-				<td><h3>
-						<a href="" th:href="@{/viewBook/} + ${book.id}">view</a>
-					</h3></td>
+				<div class ="starbar" th:style="|width: calc(20% * ${book.aveStars})|">
+				</div></td>
+				<td>
+					<h3><a href="" th:href="@{/viewBook/} + ${book.id}">view</a></h3>
+				</td>
 			</tr>
 		</table>
 	</div>

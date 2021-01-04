@@ -11,6 +11,7 @@
 
 <body>
 	<header>
+		<div class ="background"></div>
 		<h1>Add A Book!</h1>
 
 		<div id="error" class="error">
@@ -18,14 +19,22 @@
 		</div>
 	</header>
 	<form name="form" action="#" th:action="@{/admin/addBook}"
-		method="post" onsubmit="return verify()">
+		method="post" th:object ="${book}">
 
 		<p>
-			<input type="text" name="title" placeholder="Enter Title" required>
+			<input type="text" th:field=*{title} placeholder="Enter Title" required>
 		</p>
 
 		<p>
-			<input type="text" name="author" placeholder="Enter Author" required>
+			<input type="text" th:field=*{author} placeholder="Enter Author" required>
+		</p>
+		
+		<p>
+			<input type="text" th:field=*{description} placeholder="Enter description" required>
+		</p>
+		
+		<p>
+			<input type="text" th:field=*{img} placeholder="Enter Img URL">
 		</p>
 
 		<p>

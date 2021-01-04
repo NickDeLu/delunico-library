@@ -95,12 +95,18 @@ public class DatabaseAccess {
 	
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		String query = 
-				"INSERT INTO books (title, author) VALUES (:title, :author)";
+				"INSERT INTO books (title, author, img, description) VALUES (:title, :author, DEFAULT, :description)";
 		
 		namedParameters
 			.addValue("title", book.getTitle())
-			.addValue("author", book.getAuthor());
-
+			.addValue("author", book.getAuthor())
+			.addValue("description", book.getDescription());
+			
+			if(!(book.getImg().isEmpty())) {
+				System.out.println("its not null" + book.getImg());
+				namedParameters.addValue("img", book.getImg());
+				query = "INSERT INTO books (title, author, img, description) VALUES (:title, :author, :img, :description)";
+			}
 		jdbc.update(query, namedParameters);
 		
 	}
@@ -135,16 +141,17 @@ public class DatabaseAccess {
 	 * @param bookID the id of book to add a review for
 	 * @param review the text of the review to add
 	 */
-	public void addReview(Long bookID, String review, double stars) {
+	public void addReview(Review review) {
 			
 			MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 			String query = 
-					"INSERT INTO reviews (bookId, text, stars) VALUES (:bookID, :review, :stars)";
-			
+					"INSERT INTO reviews (bookId, text, stars, username) VALUES (:bookId, :review, :stars, :username)";
 			namedParameters
-				.addValue("bookID", bookID)
-				.addValue("review", review)
-				.addValue("stars", stars);
+				.addValue("bookId", review.getBookId())
+				.addValue("review", review.getText())
+				.addValue("stars", review.getStars())
+				.addValue("username", review.getUsername());
+				
 
 			jdbc.update(query, namedParameters);
 			
@@ -164,13 +171,9 @@ public class DatabaseAccess {
 			.addValue("password", user.getPassword())
 			.addValue("enabled", 1)
 			.addValue("authority", "ROLE_USER");
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
-		System.out.println(user.getAuthorities());
+
 		jdbc.update(query, namedParameters);
-		System.out.println("adding user to db");
 		jdbc.update(query2, namedParameters);
-		System.out.println("adding user authority to db");
 		
 	}
 		

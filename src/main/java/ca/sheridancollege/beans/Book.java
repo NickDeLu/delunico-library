@@ -12,4 +12,6 @@ public class Book {
 	private String title;
 	private String Author;
 	private double aveStars = 0.0;
+	private String img;
+	private String description;
 }
