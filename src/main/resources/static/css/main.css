@@ -24,7 +24,7 @@ header {
 }
 .starbar{
 	background-color: rgb(20, 63, 120);
-	height:25px;
+	height:27px;
 	z-index:100;
 	position:absolute;
 	left:0;
@@ -38,7 +38,8 @@ header {
 }
 .starcontainer{
 	position:relative;
-	padding:20px 0px 40px 0px;
+	padding:0px 0px 40px 0px;
+	min-width:115px;
 	width:115px;
 }
 .starcontainer h3{
@@ -147,6 +148,7 @@ table td, table th {
 .book-cover{
 	width:115px;
 	height:173px;
+	padding-right:20px;
 }
 
 section{
@@ -158,13 +160,14 @@ section{
 .flex-container{
 	display:flex;
 	flex-direction:row;
-	gap:20px;
+	
 }
 .flex-container2{
 	display:flex;
 	flex-direction:row;
-	gap:20px;
-	min-width:500px;
+	max-width:450px;
+	width:100%;
+	min-width:300px;
 }
 @media (max-width:900px){
 	.flex-container{
