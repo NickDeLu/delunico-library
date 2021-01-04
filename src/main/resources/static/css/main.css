@@ -171,4 +171,17 @@ section{
 	flex-direction:row;
 	width:300px;
 	padding-right:20px;
+	height:230px;
+}
+.twoline{
+	display: -webkit-box;
+	 -webkit-line-clamp: 2;
+	 -webkit-box-orient: vertical;  
+	 overflow: hidden;
+}
+.oneline{
+	display: -webkit-box;
+	 -webkit-line-clamp: 1;
+	 -webkit-box-orient: vertical;  
+	 overflow: hidden;
 }

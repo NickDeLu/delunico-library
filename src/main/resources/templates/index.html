@@ -49,8 +49,8 @@
 				<p><a href ="" th:href="@{/viewBook/} + ${book.id}"><img class ="book-cover" th:src="@{${book.img}}"></a></p>
 				<div>
 					<p>
-					<strong><h3 th:text="${book.title}"></h3></strong>
-						<p th:text="|By: ${book.author}|"></p>
+					<div class ="twoline"><h3 th:text="${book.title}"></h3></div>
+						<p class="oneline" th:text="|By: ${book.author}|"></p>
 						<div class ="starcontainer">
 							<p th:text="|${book.aveStars} stars|">jonny937</p>
 							<img src ="/img/stars.png">
