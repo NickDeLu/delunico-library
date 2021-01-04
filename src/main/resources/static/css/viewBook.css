@@ -1,0 +1,23 @@
+
+.view-flex-container{
+	display:flex;
+	flex-direction:row;
+}
+.flex-container2{
+		width:100%;
+}
+.book-details{
+	width:auto;
+}
+@media (max-width:900px){
+	.view-flex-container{
+		flex-direction:column;
+		
+	}
+	.flex-container2{
+		width:100%;
+	}
+}
+p{
+	line-height: 2;
+}

@@ -21,14 +21,14 @@
 
 		<div sec:authorize="hasRole('ROLE_MANAGER')">
 			<h2>
-				<a href="#" th:href="@{/admin/addPage}">Add a Book</a>
+				<span><a href="#" th:href="@{/admin/addPage}">Add a Book</a></span>
 			</h2>
 		</div>
 
 		<div th:unless="${roles}">
 			<h1>Welcome to the Library Database</h1>
 			<h2>
-				<a href="#" th:href="@{/login}">Login</a>
+				<span><a href="#" th:href="@{/login}">Login</a></span>
 			</h2>
 		</div>
 
@@ -42,29 +42,44 @@
 		<h2 th:text="|There are no books!|">The database is empty!</h2>
 	</div>
 
-	<div th:unless="${books.empty}" class="center-container">
+	<div th:unless="${books.empty}">
 
-		<table CELLSPACING=0>
+		<section class ="flex-container">
+			<div class ="flex-container2" th:each="book : ${books}">
+				<p><a href ="" th:href="@{/viewBook/} + ${book.id}"><img class ="book-cover" th:src="@{${book.img}}"></a></p>
+				<div>
+					<p>
+					<strong><h3 th:text="${book.title}"></h3></strong>
+						<p th:text="|By: ${book.author}|"></p>
+						<div class ="starcontainer">
+							<p th:text="|${book.aveStars} stars|">jonny937</p>
+							<img src ="/img/stars.png">
+							<div class ="starbar" th:style="|width: calc(20% * ${book.aveStars})|"></div>
+						</div></p>
+				</div>
+			</div>
+		</section>
+		<!-- <table CELLSPACING=0>
 
 			<tr>
 				<th>Title</th>
 				<th>Author</th>
-				<th>Rating</th>
 				<th>Reviews</th>
 			</tr>
 
 			<tr th:each="book : ${books}">
 				<td><h3 th:text="${book.title}">Kill Iron Man</h3></td>
 				<td><h3 th:text="${book.Author}">Armored Suit</h3></td>
-				<td class ="starcontainer"><h3 th:text="|${book.aveStars} stars|">5 stars</h3>
+				<td class ="starcontainer">
+				<h3><a href=""  th:href="@{/viewBook/} + ${book.id}">view</a></h3>
+				<h3 th:text="|${book.aveStars} stars|">5 stars</h3>
 				<img src ="/img/stars.png">
 				<div class ="starbar" th:style="|width: calc(20% * ${book.aveStars})|">
-				</div></td>
-				<td>
-					<h3><a href="" th:href="@{/viewBook/} + ${book.id}">view</a></h3>
-				</td>
+				</div>
+				
+				
 			</tr>
-		</table>
+		</table> -->
 	</div>
 </body>
 </html>

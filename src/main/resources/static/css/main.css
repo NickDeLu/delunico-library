@@ -6,6 +6,7 @@ header {
 	text-align: center;
 	padding: 40px 20px 20px 20px;
 }
+
 .background{
 	background-image:url("/img/background.jpg");
 	width:100%;
@@ -27,14 +28,14 @@ header {
 	height:27px;
 	z-index:100;
 	position:absolute;
-	left:0;
+	left:-5px;
 	width:100%
 }
 .starcontainer img{
 	width:100%;
 	z-index:110;
 	position:absolute;
-	left:0px;
+	left:-5px;
 }
 .starcontainer{
 	position:relative;
@@ -82,21 +83,21 @@ h1, th{
 	z-index:100;
 }
 
-h2, h3 {
+h2, h3,p {
 	font-family: arial;
 	color: rgb(1, 55, 102);
 }
-
-input, select, a {
+input, span{
 	background-color: rgb(20, 63, 120);
-	color: white;
 	padding: 10px;
-	text-decoration: none;
-	cursor: pointer;
+	color: white;
 }
 
 a {
 	line-height: 300%;
+	text-decoration: none;
+	cursor: pointer;
+	color: white;
 }
 
 table {
@@ -157,20 +158,16 @@ section{
 	border-right:10px solid rgb(13, 41, 77);
 	padding:20px;
 }
+
 .flex-container{
 	display:flex;
 	flex-direction:row;
-	
+	justify-content:space-evenly;
+	flex-flow:wrap;
 }
 .flex-container2{
 	display:flex;
 	flex-direction:row;
-	max-width:450px;
-	width:100%;
-	min-width:300px;
-}
-@media (max-width:900px){
-	.flex-container{
-		flex-direction:column;
-	}
+	width:300px;
+	padding-right:20px;
 }

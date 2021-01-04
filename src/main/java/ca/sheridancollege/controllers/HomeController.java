@@ -145,11 +145,12 @@ public class HomeController {
 		if (auth != null) {
 			model.addAttribute("userName", auth.getName());
 		}
+		da.aveReviews();
 		List<Review> reviews = da.getReviews(bookID);
 		model.addAttribute("reviews", reviews);
 		Book book = da.getBook(bookID);
 		model.addAttribute("book", book);
-		da.aveReviews();
+		
 		return "view-book";
 	}
 	/**

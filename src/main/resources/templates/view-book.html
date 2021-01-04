@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/viewBook.css">
 <title>Reviews!</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -19,14 +20,14 @@
 
 		<div th:unless="${userName}">
 			<h1>
-				Want to leave a review?<a href="#" th:href="@{/login}">Login</a>
+				Want to leave a review?<span><a href="#" th:href="@{/login}">Login</a></span>
 			</h1>
 		</div>
 
 
 		<div sec:authorize="hasAnyRole('USER','MANAGER')">
 			<h2>
-				<a href="#" th:href="@{/user/addReview/} +${book.id}">Add Review</a>
+				<span><a href="#" th:href="@{/user/addReview/} +${book.id}">Add Review</a></span>
 			</h2>
 			<form action="#" th:action="@{/logout}" method="post"
 				style="border: none;">
@@ -46,24 +47,25 @@
 		<p th:text="${message}" />
 	</div>
 	<div class="section-header">Description</div>
-	<section class ="flex-container">
+	<section class ="view-flex-container">
 		
-		<div class ="flex-container2">
+		<div class ="flex-container2" >
 			<p><img class ="book-cover" th:src="@{${book.img}}"></p>
-			<div>
+			<div class ="book-details">
 				<p>
 				<h3 th:text="${book.title}"></h3>
-					<h3 th:text="|By: ${book.author}|"></h3>
+					<p th:text="|By: ${book.author}|"></p>
 					<div class ="starcontainer">
-						<h3 th:text="|${book.aveStars} stars|">jonny937</h3>
+						<p th:text="|${book.aveStars} stars|">jonny937</p>
 						<img src ="/img/stars.png">
 						<div class ="starbar" th:style="|width: calc(20% * ${book.aveStars})|"></div>
 					</div></p>
 			</div>
 		</div>
 
-		
-		<h3 th:text ="${book.description}">follows the journey of Brian the snail, an adventure you'll never forget</h3>
+		<div>
+			<p th:text ="${book.description}">follows the journey of Brian the snail, an adventure you'll never forget</p>
+		</div>
 				
 		
 	</section>
@@ -81,11 +83,15 @@
 			</tr>
 		
 			<tr th:each="review : ${reviews}">
-				<td><h3 th:text="${review.text}">it was great</h3></td>
+				<td><p th:text="${review.text}">it was great</p></td>
 				<td><h3 th:text="${review.username}">jonny937</h3></td>
-				<td class ="starcontainer"><h3 th:text="|${review.stars} stars|">5 stars</h3>
+				
+				<td class ="starcontainer">
+				
+					<h3 th:text="|${review.stars} stars|">5 stars</h3>
 					<img src ="/img/stars.png">
 					<div class ="starbar" th:style="|width: calc(20% * ${review.stars})|"></div>
+				
 				</td>
 
 			</tr>
