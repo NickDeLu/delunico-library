@@ -185,3 +185,6 @@ section{
 	 -webkit-box-orient: vertical;  
 	 overflow: hidden;
 }
+.book-details .twoline{
+	height:65px;
+}

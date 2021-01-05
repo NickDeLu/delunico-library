@@ -47,7 +47,7 @@
 		<section class ="flex-container">
 			<div class ="flex-container2" th:each="book : ${books}">
 				<p><a href ="" th:href="@{/viewBook/} + ${book.id}"><img class ="book-cover" th:src="@{${book.img}}"></a></p>
-				<div>
+				<div class ="book-details">
 					<p>
 					<div class ="twoline"><h3 th:text="${book.title}"></h3></div>
 						<p class="oneline" th:text="|By: ${book.author}|"></p>
