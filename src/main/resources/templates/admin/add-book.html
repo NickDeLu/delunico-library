@@ -6,51 +6,65 @@
 <title>Add A Book</title>
 <link rel="stylesheet" href="/css/main.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<script src="../static/js/nav.js" th:src="@{/js/nav.js}"></script>
 </head>
 
 <body>
 	<header>
+		<img src="/img/elibrary.png">
 		<div class ="background"></div>
-		<h1>Add A Book!</h1>
-
+		<div sec:authorize="hasAnyRole('USER','MANAGER')">
+			<h2 class="top-right"><a href="/logout">Logout</a></h2>
+		</div>
+		<h2 class ="top-left"><a onclick="goBack()">Go Back</a></h2>
 		<div id="error" class="error">
 			<h2></h2>
 		</div>
 	</header>
-	<form name="form" action="#" th:action="@{/admin/addBook}"
+	<nav class ="topnav" id ="myTopnav">
+		<span><a class = "homenav" href ="/"><div>Browse</div></a></span>
+		<a href ="/mybooks">MyBooks</a>
+		<a href ="/account">Account</a>
+		<a sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
+			Add a Book
+		</a>
+		<div class ="search-container">
+			<form action="/search">
+				
+				<input type="text" placeholder="Search.." name="search">
+				
+				<button type="submit"><i class="fa fa-search"></i></button>
+			</form>
+		</div>
+		<a class ="icon"  href="javascript:void(0);" onclick="hamburger()">
+			<i class ="fa fa-bars"></i>
+		</a>
+	</nav>
+	<section class ="flex-container">
+		<form name="form" action="#" th:action="@{/admin/addBook}"
 		method="post" th:object ="${book}">
 
-		<p>
-			<input type="text" th:field=*{title} placeholder="Enter Title" required>
-		</p>
+			<p>
+				<input type="text" th:field=*{title} placeholder="Enter Title" required>
+			</p>
+	
+			<p>
+				<input type="text" th:field=*{author} placeholder="Enter Author" required>
+			</p>
+			
+			<p>
+				<input type="text" th:field=*{description} placeholder="Enter description" required>
+			</p>
+			
+			<p>
+				<input type="text" th:field=*{img} placeholder="Enter Img URL">
+			</p>
+	
+			<p>
+				<input type="submit" value="Add Book">
+			</p>
 
-		<p>
-			<input type="text" th:field=*{author} placeholder="Enter Author" required>
-		</p>
-		
-		<p>
-			<input type="text" th:field=*{description} placeholder="Enter description" required>
-		</p>
-		
-		<p>
-			<input type="text" th:field=*{img} placeholder="Enter Img URL">
-		</p>
-
-		<p>
-			<input type="submit" value="Add Book">
-		</p>
-
-	</form>
-	<form style="border: none;">
-		<h2>
-			<input type="submit" value="Home" class="top-left" formaction="/"
-				formmethod="get">
-		</h2>
-		<h2>
-			<input type="submit" value="Logout" class="top-right"
-				formaction="/logout" formmethod="post">
-		</h2>
-	</form>
+		</form>
+	</section>
 </body>
 </html>

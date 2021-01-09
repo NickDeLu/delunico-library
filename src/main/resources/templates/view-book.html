@@ -7,50 +7,56 @@
 <link rel="stylesheet" href="/css/viewBook.css">
 <title>Reviews!</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="../static/js/nav.js" th:src="@{/js/nav.js}"></script>
 </head>
+
 <body>
 	<header>
+		<img src="/img/elibrary.png">
 		<div class ="background"></div>
 		<div th:if="${reviews.empty}">
 			<h1>There are no reviews!</h1>
 		</div>
-		<div th:unless="${reviews.empty}">
-			<h1 th:text="|Reviews for ${book.title}|">Reviews!</h1>
-		</div>
-
-		<div th:unless="${userName}">
-			<h1>
-				Want to leave a review?<span><a href="#" th:href="@{/login}">Login</a></span>
-			</h1>
-		</div>
-
-
+		
+		<h2 class ="top-left"><a onclick="goBack()">Go Back</a></h2>
 		<div sec:authorize="hasAnyRole('USER','MANAGER')">
-			<h2>
-				<span><a href="#" th:href="@{/user/addReview/} +${book.id}">Add Review</a></span>
-			</h2>
-			<form action="#" th:action="@{/logout}" method="post"
-				style="border: none;">
-				<input type="submit" value="Logout" class="top-right">
-			</form>
+			<h2 class="top-right"><a href="/logout">Logout</a></h2>
 		</div>
-		<form style="border: none;">
-			<h2>
-				<input type="submit" value="Home" class="top-left" formaction="/"
-					formmethod="get">
-			</h2>
-		</form>
-
+			<div th:unless="${userName}" class="top-right">
+			<h2><a href="#" th:href="@{/login}">Login</a></h2>
+			<h2><a href="#" th:href="@{/register}">Sign Up</a></h2>
+		</div>
 	</header>
-
 	<div th:if="${message}" class="error">
 		<p th:text="${message}" />
 	</div>
-	<div class="section-header">Description</div>
+	<nav class ="topnav" id ="myTopnav">
+		<span><a class = "homenav" href ="/"><div>Browse</div></a></span>
+		<a href ="/mybooks">MyBooks</a>
+		<a href ="/account">Account</a>
+		<a sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
+			Add a Book
+		</a>
+		<div class ="search-container">
+			<form action="/search">
+				
+				<input type="text" placeholder="Search.." name="search">
+				
+				<button type="submit"><i class="fa fa-search"></i></button>
+			</form>
+		</div>
+		<a class ="icon"  href="javascript:void(0);" onclick="hamburger()">
+			<i class ="fa fa-bars"></i>
+		</a>
+	</nav>
+	
+	
 	<section class ="view-flex-container">
-		
 		<div class ="flex-container2" >
-			<p><img class ="book-cover" th:src="@{${book.img}}"></p>
+			<div>
+				<img class ="book-cover" th:src="@{${book.img}}">
+				<h2 ><a href="#" th:href="@{/user/addReview/} +${book.id}">Add Review</a></h2>
+			</div>
 			<div class ="book-details">
 				<p>
 				<h3 th:text="${book.title}"></h3>
@@ -63,39 +69,24 @@
 			</div>
 		</div>
 
-		<div>
+		<div class ="description">
 			<p th:text ="${book.description}">follows the journey of Brian the snail, an adventure you'll never forget</p>
 		</div>
-				
 		
 	</section>
-		
-		
 	
-	<div th:unless="${reviews.empty}" class="center-container">
-		
-		<table CELLSPACING=0>
-
-			<tr>
-				<th>Review</th>
-				<th>Username</th>
-				<th>Rating</th>
-			</tr>
-		
-			<tr th:each="review : ${reviews}">
-				<td><p th:text="${review.text}">it was great</p></td>
-				<td><h3 th:text="${review.username}">jonny937</h3></td>
-				
-				<td class ="starcontainer">
-				
-					<h3 th:text="|${review.stars} stars|">5 stars</h3>
+	<div th:unless="${reviews.empty}">
+		<section class ="flex-container">
+			<div th:each="review : ${reviews}" class="review-container">
+				<div class ="starcontainer" >
 					<img src ="/img/stars.png">
 					<div class ="starbar" th:style="|width: calc(20% * ${review.stars})|"></div>
-				
-				</td>
+					<h3 th:text="${review.username}">jonny937</h3>
+				</div>
 
-			</tr>
-		</table>
+				<p th:text="${review.text}">it was great</p>
+			</div>
+		</section>
 	</div>
 
 </body>

@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
 import ca.sheridancollege.beans.Book;
 import ca.sheridancollege.beans.Review;
+import ca.sheridancollege.beans.User;
 
 @Repository
 public class DatabaseAccess {
@@ -152,7 +152,6 @@ public class DatabaseAccess {
 				.addValue("stars", review.getStars())
 				.addValue("username", review.getUsername());
 				
-
 			jdbc.update(query, namedParameters);
 			
 	}
@@ -160,8 +159,8 @@ public class DatabaseAccess {
 		System.out.println("database access");
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		String query = 
-				"INSERT INTO user_table (username,password,enabled) "
-				+ "VALUES (:username, :password, :enabled)";
+				"INSERT INTO user_table (username,password,email,enabled) "
+				+ "VALUES (:username, :password, :email, :enabled)";
 		String query2 =
 				"INSERT INTO authorities (username, authority) "
 				+ "VALUES (:username, :authority)";
@@ -169,12 +168,30 @@ public class DatabaseAccess {
 		namedParameters
 			.addValue("username", user.getUsername())
 			.addValue("password", user.getPassword())
+			.addValue("email", user.getEmail())
 			.addValue("enabled", 1)
 			.addValue("authority", "ROLE_USER");
 
 		jdbc.update(query, namedParameters);
 		jdbc.update(query2, namedParameters);
 		
+	}
+	public List<Book> searchBooks(String search) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params
+		.addValue("search", search);
+		String query = "SELECT * FROM books WHERE title ilike '%' || (:search) || '%'";
+		
+		BeanPropertyRowMapper<Book> bookMapper = 
+				new BeanPropertyRowMapper<Book>(Book.class);
+		
+		List<Book> books = jdbc.query(query, params, bookMapper);
+		
+		if(books.isEmpty()) {
+			return null;
+		}else {
+			return books;
+		}	
 	}
 		
 	

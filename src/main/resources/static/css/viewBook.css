@@ -2,22 +2,26 @@
 .view-flex-container{
 	display:flex;
 	flex-direction:row;
+	justify-content:center;
+	flex-flow:wrap;
 }
 .flex-container2{
-		width:100%;
+	width:100%;
+	
 }
 .book-details{
-	width:auto;
+	width:400px;
 }
-@media (max-width:900px){
-	.view-flex-container{
-		flex-direction:column;
-		
-	}
-	.flex-container2{
-		width:100%;
-	}
+.description{
+	max-width:500px;
 }
+
 p{
 	line-height: 2;
+}
+@media screen and (max-width:367px){
+	.book-details p{
+		margin:0;
+		padding:0;
+	}
 }

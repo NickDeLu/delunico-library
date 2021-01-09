@@ -15,16 +15,23 @@
 		<img src="/img/elibrary.png">
 		<div class ="background"></div>
 		<div sec:authorize="hasAnyRole('USER','MANAGER')" >
-			<h1 class ="top-left" th:text="|Hi ${userName}!|">Welcome!</h1>
 			<h2 class = "top-right"><a href="#" th:href="@{/logout}">Logout</a></h2>
 		</div>
 
-		<div th:unless="${roles}" class = "top-right">
+		<div th:unless="${userName}" class = "top-right">
 			<h2><a href="#" th:href="@{/login}">Login</a></h2>
 			<h2><a href="#" th:href="@{/register}">Sign Up</a></h2>
 		</div>
+
+		<div th:if="${message}" class="error">
+			<p th:text="${message}" />
+		</div>
 		
 	</header>
+
+	<div th:if="${books.empty}">
+		<h2 th:text="|There are no books!|">The database is empty!</h2>
+	</div>
 
 	<div th:unless="${books.empty}">
 
@@ -47,16 +54,10 @@
 				<i class ="fa fa-bars"></i>
 			</a>
 		</nav>
-
-		<section >
-			<div th:if="${message}" class="error" align="center">
-				<h2 th:text="${message}"></h2>
-			</div>
+		
+		<section>
+			<h3 th:text="|Results for ${search}|"></h3>
 			<div class ="flex-container">
-				
-				<div th:if="${books.empty}">
-					<h2 th:text="|There are no books!|">The database is empty!</h2>
-				</div>
 				<div class ="flex-container2" th:each="book : ${books}">
 					<p><a href ="" th:href="@{/viewBook/} + ${book.id}"><img class ="book-cover" th:src="@{${book.img}}"></a></p>
 					<div class ="book-details">

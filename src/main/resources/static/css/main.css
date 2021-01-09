@@ -1,10 +1,12 @@
+
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
 html{
 	background-color: rgb(1, 55, 102);
 }
 header {
-	
+	height:100px;
 	text-align: center;
-	padding: 40px 20px 20px 20px;
+	padding: 20px 20px 40px 20px;
 }
 
 .background{
@@ -52,15 +54,162 @@ body {
 
 textarea {
 	min-height: 100px;
-	width: 50%
+	width: 70%;
+	resize:none;
+	font-size: 17px;
+	max-width:400px;
+}
+.flex-container form{
+	text-align:center;
+	background-color: rgb(13, 41, 77);
+	padding: 20px 0px 20px 0px;
+	width:80%;
+}
+.flex-container form input{
+	width:50%;	
+	max-width:300px;
+}
+.topnav{
+	background-color: rgb(13, 41, 77);
+	overflow:hidden;
+	padding:10px 5px 0px 5px;
+	text-align:center;
+}
+input[type="text"],input[type="password"],input[type="email"] {
+	width:85%;
+ 	padding: 8px;
+  	border:1px solid black;
+  	-webkit-box-sizing: border-box; 
+  	-moz-box-sizing: border-box;    
+ 	box-sizing: border-box;  
+  	border: none;
+  	font-size: 17px;
+  	border: 1px solid; 
+}
+.topnav a:hover { 
+	background-color: rgb(31, 96, 184);
+}
+.topnav .icon{
+	display:none;
+	float:right;
+}
+.topnav button:hover {
+  background: #ccc;
 }
 
-form input[type="text"], input[type="password"] {
-	border-radius: 20px;
-	outline: none;
+.topnav button i{
+	color:white;
+}
+.topnav button {
+  background:none;
+  float:right;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  float:right;
+  width:15%;
+  height:38px;
+} 
+h3 a{
+	text-decoration:none;
+	color: rgb(1, 55, 102);
+	
+}
+h2{
+	color:rgb(20, 63, 120);
+	font-family:arial;
+	font-size:20px;
+	font-weight:bold;
+	
+}
+h2 a, input[type="submit"]{
+	text-decoration:none;
+	color:white;
+	font-family:arial;
+	font-size:15px;
+	background-color:rgb(20, 63, 120);
+	padding:10px 12px;
+	cursor:pointer;
+	font-weight: bold;
+	margin:0px 5px 0px 5px;
+}
+.topnav a{
+	font-family:arial;
+	font-weight: bold;
+	display:inline-block;
+	background-color:rgb(20, 63, 120);
+	color:white;
+	font-family:arial;
+	font-size:15px;
+	text-decoration:none;
+	padding:10px 12px;
+	text-align:center;
+	margin:5px;
+	cursor:pointer;
+}
+.search-container{
+	display:inline-block;
+	width:30%;
 }
 
-th, .section-header {
+
+@media screen and (max-width:760px){
+	.topnav a:not(:last-child){
+		opacity:0;
+		transform: translateY(-2em);
+		position:absolute;
+	}
+	.topnav .search-container{display:inline-block;}
+	.topnav a.icon{
+		display:inline-block;
+	}
+	.homenav{
+		float:left;
+	}
+	.topnav.responsiveness{position:relative;}
+	.topnav.responsiveness a.icon{
+		position:absolute;
+		right:0;
+		top:0;
+	}
+	.search-container{
+		width:50%;
+		margin-top:5px;
+	}
+	.topnav.responsive a {
+		position:relative;
+		float:none;
+		display:block;
+		text-align:left;
+		transition:all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+		opacity:1;
+		transform:translateY(0%);
+		transition-delay: 0s, 0s, 0.3s; 
+	 }
+	.topnav.responsive .search-container{
+		display:none;
+	}
+}
+@media screen and (max-width:650px){
+	.homenav:after{
+		content:'\f015';
+		 font-family: FontAwesome;
+	}	
+	.homenav div{
+		display:none;
+	}	
+	.search-container{
+		width:60%;
+	}
+}
+
+@media screen and (max-width:367px){
+	.search-container{
+		width:50%;
+	}
+}
+
+th{
 	background-color: rgb(13, 41, 77);
 	font-size: 25px;
 	font-family:arial;
@@ -70,34 +219,19 @@ th, .section-header {
 tr{
 	background-color: white;
 }
- .section-header{
- 	padding:10px 10px 5px 10px;
- 	text-align:center;
- }
 
 h1, th{
-	margin:50px;
+	margin:20px;
 	font-family: arial;
 	font-weight: bold;
 	color: white;
 	z-index:100;
+	font-size:15px;
 }
 
-h2, h3,p {
+h3,p {
 	font-family: arial;
 	color: rgb(1, 55, 102);
-}
-input, span{
-	background-color: rgb(20, 63, 120);
-	padding: 10px;
-	color: white;
-}
-
-a {
-	line-height: 300%;
-	text-decoration: none;
-	cursor: pointer;
-	color: white;
 }
 
 table {
@@ -113,22 +247,19 @@ input[type="submit"] {
 }
 
 .top-left {
+	display:flex;
+	flex-direction:row;
 	position: absolute;
-	top: 20px;
-	left: 20px;
+	top: 0px;
+	left: 5px;
 }
 
 .top-right {
+	display:flex;
+	flex-direction:row;
 	position: absolute;
-	top: 20px;
-	right: 20px;
-}
-
-form {
-	border: 10px solid rgb(13, 41, 77);
-	text-align: center;
-	margin: 5px;
-	background-color: white;
+	top: 0px;
+	right: 5px;
 }
 
 td:nth-child(1n), th:nth-child(1n) {
@@ -169,7 +300,7 @@ section{
 .flex-container2{
 	display:flex;
 	flex-direction:row;
-	width:300px;
+	max-width:300px;
 	padding-right:20px;
 	height:230px;
 }
@@ -184,6 +315,18 @@ section{
 	 -webkit-line-clamp: 1;
 	 -webkit-box-orient: vertical;  
 	 overflow: hidden;
+}
+.review-container{
+	width:500px;
+	border:2px solid rgb(192, 192, 192);
+	margin:10px;
+	padding-left:10px;
+}
+.review-container h3{
+	float:right;
+	margin-left:120px;
+	top:5px;
+	position:absolute;
 }
 .book-details .twoline{
 	height:65px;

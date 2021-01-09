@@ -3,43 +3,57 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="/css/main.css">
+<script src="../static/js/nav.js" th:src="@{/js/nav.js}"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Log In</title>
 
 </head>
 <body>
 	<header>
+		<img src="/img/elibrary.png">
 		<div class ="background"></div>
-		<h1>Login</h1>
-		<div th:if="${param.error}" class="error">
-			<p>Invalid username or password</p>
-		</div>
 
 		<div th:if="${param.logout}" class="error">
 			<p>You are now logged out</p>
 		</div>
+		<h2 class ="top-left"><a onclick="goBack()">Go Back</a></h2>
 	</header>
-	<form action="#" th:action="@{/login}" method="post">
-		<h2>
-			<input type="text" name="username" placeholder="Enter Username"
-				required />
-		</h2>
-		<h2>
-			<input type="password" name="password" placeholder=" Enter Password"
-				required />
-		</h2>
-		<h2>
+	<nav class ="topnav" id ="myTopnav">
+		<span><a class = "homenav" href ="/"><div>Browse</div></a></span>
+		<a href ="/mybooks">MyBooks</a>
+		<a href ="/account">Account</a>
+		<a sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
+			Add a Book
+		</a>
+		<div class ="search-container">
+			<form action="/search">
+				
+				<input type="text" placeholder="Search.." name="search">
+				
+				<button type="submit"><i class="fa fa-search"></i></button>
+			</form>
+		</div>
+		<a class ="icon"  href="javascript:void(0);" onclick="hamburger()">
+			<i class ="fa fa-bars"></i>
+		</a>
+	</nav>
+	<section class ="flex-container">
+		
+		<form action="#" th:action="@{/login}" method="post" >
+			<div th:if="${param.error}" class="error">
+				<h1>Invalid username or password</h1>
+			</div>
+			<p>
+				<input type="text" name="username" placeholder="Enter Username"required />
+			</p>
+			<p>
+				<input type="password" name="password" placeholder=" Enter Password"required />
+			</p>
 			<input type="submit" value="login">
-		</h2>
-		<h3>Not a member?</h3>
-		<h2>
-			<span><a href="/register">Register Here</a></span>
-		</h2>
-	</form>
-	<form style="border: none;" th:action="@{/}" method="get">
-		<h2>
-			<input type="submit" value="Home" class="top-left">
-		</h2>
-	</form>
+			<h1>Not a member?</h1>
+			<h2><a href="/register">Register Here</a></h2>
+		</form>
+		
+	</section>
 </body>
 </html>

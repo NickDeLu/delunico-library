@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ca.sheridancollege.beans.Book;
 import ca.sheridancollege.beans.Review;
+import ca.sheridancollege.beans.User;
 import ca.sheridancollege.database.DatabaseAccess;
 
 @Controller
@@ -46,7 +46,7 @@ public class HomeController {
 	 */
 	@PostMapping("addUser")
 	public String addUser(@RequestParam String userName, @RequestParam String password,
-			@RequestParam String[] authorities, Model model) {
+			@RequestParam String[] authorities, @RequestParam String email,Model model) {
 		try {
 			List<GrantedAuthority> authorityList = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class HomeController {
 				authorityList.add(new SimpleGrantedAuthority(authority));
 			}
 			String encodedPassword = passwordEncoder.encode(password);
-			User user = new User(userName, encodedPassword, authorityList);
+			User user = new User(userName, encodedPassword, email, authorityList);
 			da.addUser(user);
 			model.addAttribute("message", "User successfully added");
 
@@ -117,6 +117,17 @@ public class HomeController {
 		review.setBookId(bookId);
 		da.addReview(review);
 		return "redirect:/viewBook/" + review.getBookId();
+	}
+	@GetMapping("search")
+	public String search(@RequestParam String search, Model model, Authentication auth) {
+		List<Book> books = da.searchBooks(search);
+		da.aveReviews();
+		model.addAttribute("search",search);
+		model.addAttribute("books",books);
+		if (auth != null) {
+			model.addAttribute("userName", auth.getName());
+		}
+		return "results";
 	}
 	/**
 	 * This method maps to the add-review template and

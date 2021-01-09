@@ -4,48 +4,59 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="/css/main.css">
+<script src="../static/js/nav.js" th:src="@{/js/nav.js}"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Add A User</title>
+<title>Register</title>
 
 </head>
 
 <body>
 	<header>
+		<img src="/img/elibrary.png">
 		<div class ="background"></div>
-		<h1>Register Here!</h1>
-
-		<div id="error" class="error">
-			<p></p>
-		</div>
-		<div th:if="${message}" class="error">
-			<p th:text="${message}" />
-		</div>
+		<h2 class ="top-left"><a onclick="goBack()">Go Back</a></h2>
 	</header>
-
-	<form name="form" action="#" th:action="@{/addUser}" method="post">
-		<h2>
-			<input type="text" name="userName" placeholder="Enter Username"
-				required />
-		</h2>
-		<h2>
-			<input type="password" name="password" placeholder=" Enter Password"
-				required />
-		</h2>
-		<h2>
+	<nav class ="topnav" id ="myTopnav">
+		<span><a class = "homenav" href ="/"><div>Browse</div></a></span>
+		<a href ="/mybooks">MyBooks</a>
+		<a href ="/account">Account</a>
+		<a sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
+			Add a Book
+		</a>
+		<div class ="search-container">
+			<form action="/search">
+				
+				<input type="text" placeholder="Search.." name="search">
+				
+				<button type="submit"><i class="fa fa-search"></i></button>
+			</form>
+		</div>
+		<a class ="icon"  href="javascript:void(0);" onclick="hamburger()">
+			<i class ="fa fa-bars"></i>
+		</a>
+	</nav>
+	<section class ="flex-container">
+		
+		<form name="form" action="#" th:action="@{/addUser}" method="post">
+			<div th:if="${message}" class="error">
+				<h1 th:text="${message}" ></h1>
+			</div>
+			<p>
+				<input type="text" name="userName" placeholder="Enter Username" required />
+			</p>
+			<p>
+				<input type="password" name="password" placeholder="Enter Password" required />
+			</p>
+			<p>
+				<input type="email" name="email" placeholder="johndoe@example.ca" required />
+			</p>
 			<input type="checkbox" style="visibility: hidden;" name="authorities"
 				th:value="${userAuthority}" th:id="${authority}" class="top-right"
 				checked />
-		</h2>
-
-		<h2>
-			<input type="submit" value="Add User">
-		</h2>
-	</form>
-	<form style="border: none;">
-		<h2>
-			<input type="submit" value="Home" class="top-left" formaction="/"
-				formmethod="get">
-		</h2>
-	</form>
+			<p>
+				<input type="submit" value="Add User">
+			</p>
+		</form>
+	</section>
 </body>
 </html>
