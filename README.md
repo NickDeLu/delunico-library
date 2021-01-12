@@ -10,13 +10,15 @@ Your password can be recovered at <a href = "https://delunico-library.herokuapp.
  ####  Free Accounts ####
  There are two free accounts for you to try out if you dont want to make your own!
 <br>
-Manager Account: 
+
 <ul>
+  <td>Manager Account:</td>
   <li>Username: daffy</li>
   <li>Password: duck</li>
 </ul>
-User Account:
+
 <ul>
+  <td>User Account:</td>
   <li>Username: bugs</li>
   <li>Password: bunny</li>
 </ul>
