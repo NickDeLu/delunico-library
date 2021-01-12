@@ -25,7 +25,7 @@ This project was hosted on the free heroku web server. All commits and updates t
 ## Database ##
 The postgresql database is achieved by integrating the heroku postgres add on with my spring app. 
 
-## Design Pattern ##
+## Design Patterns ##
 <ul>
   <li>MVC design pattern</li>
   <li>JdbcTemplate</li>
