@@ -23,9 +23,9 @@
 	</header>
 	<nav class ="topnav" id ="myTopnav">
 		<span><a class = "homenav" href ="/"><div>Browse</div></a></span>
-		<a href ="/mybooks">MyBooks</a>
+		<a href ="/user/myBooks">MyBooks</a>
 		<a href ="/account">Account</a>
-		<a sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
+		<a class ="active" sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
 			Add a Book
 		</a>
 		<div class ="search-container">

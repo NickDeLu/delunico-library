@@ -18,8 +18,8 @@
 	</header>
 	<nav class ="topnav" id ="myTopnav">
 		<span><a class = "homenav" href ="/"><div>Browse</div></a></span>
-		<a href ="/mybooks">MyBooks</a>
-		<a href ="/account">Account</a>
+		<a href ="/user/myBooks">MyBooks</a>
+		<a href ="/user/account">Account</a>
 		<a sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
 			Add a Book
 		</a>
@@ -54,7 +54,7 @@
 				th:value="${userAuthority}" th:id="${authority}" class="top-right"
 				checked />
 			<p>
-				<input type="submit" value="Add User">
+				<input type="submit" value="Register">
 			</p>
 		</form>
 	</section>

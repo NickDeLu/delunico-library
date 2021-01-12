@@ -17,7 +17,7 @@
 		<div sec:authorize="hasAnyRole('USER','MANAGER')" >
 			<h2 class = "top-right"><a href="#" th:href="@{/logout}">Logout</a></h2>
 		</div>
-
+		<h2 class ="top-left"><a onclick="goBack()">Go Back</a></h2>
 		<div th:unless="${userName}" class = "top-right">
 			<h2><a href="#" th:href="@{/login}">Login</a></h2>
 			<h2><a href="#" th:href="@{/register}">Sign Up</a></h2>
@@ -37,8 +37,8 @@
 
 		<nav class ="topnav" id ="myTopnav">
 			<span><a class = "homenav" href ="/"><div>Browse</div></a></span>
-			<a href ="/mybooks">MyBooks</a>
-			<a href ="/account">Account</a>
+			<a href ="/user/myBooks">MyBooks</a>
+			<a href ="/user/account">Account</a>
 			<a sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
 				Add a Book
 			</a>
@@ -56,7 +56,7 @@
 		</nav>
 		
 		<section>
-			<h3 th:text="|Results for ${search}|"></h3>
+			<h3 align ="center" th:text="|Results for ${search}|"></h3>
 			<div class ="flex-container">
 				<div class ="flex-container2" th:each="book : ${books}">
 					<p><a href ="" th:href="@{/viewBook/} + ${book.id}"><img class ="book-cover" th:src="@{${book.img}}"></a></p>

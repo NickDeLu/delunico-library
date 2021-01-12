@@ -12,6 +12,10 @@
 	<header>
 		<img src="/img/elibrary.png">
 		<div class ="background"></div>
+
+		<div th:if="${param.logout}" class="error">
+			<p>You are now logged out</p>
+		</div>
 		<h2 class ="top-left"><a onclick="goBack()">Go Back</a></h2>
 	</header>
 	<nav class ="topnav" id ="myTopnav">
@@ -35,26 +39,15 @@
 	</nav>
 	<section class ="flex-container">
 		
-		<form action="#" th:action="@{/login}" method="post" >
-			<div th:if="${param.logout}" class="error">
-				<h1>You are now logged out</h1>
-			</div>
-			<div th:if="${param.error}" class="error">
-				<h1>Invalid username or password</h1>
-			</div>
+		<form action="#" th:action="@{/recover}" method="post" >
+			<h1>Enter your account email to receive a new password</h1>
 			<div th:if="${message}" class="error">
 				<h1 th:text="${message}"></h1>
 			</div>
 			<p>
-				<input type="text" name="username" placeholder="Enter Username"required />
-			</p>
-			<p>
-				<input type="password" name="password" placeholder=" Enter Password"required />
+				<input type="text" name="email" placeholder="Enter Email"required />
 			</p>
 			<input type="submit" value="login">
-			<h1>Not a member?</h1>
-			<h2><a href="/register">Register Here</a></h2>
-			<h1>forgot your password?</h1><h2><a href="/recover-account">Recover Now</a></h2>
 		</form>
 		
 	</section>

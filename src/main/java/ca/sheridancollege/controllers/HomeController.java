@@ -2,12 +2,17 @@ package ca.sheridancollege.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
@@ -30,11 +35,86 @@ public class HomeController {
 	DatabaseAccess da;
 
 	@Autowired
+	private JavaMailSender mailSender;
+	
+	@Autowired
 	private JdbcUserDetailsManager jdbcUserDetailsManager;
 
 	@Autowired
 	@Lazy
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	@PostMapping("recover")
+	public String recoverAccount(Model model,@RequestParam String email) {
+		String newPassword = generatePassword();
+		String encodedPassword = passwordEncoder.encode(newPassword);
+		String message = "Your new password is "+ newPassword;
+		if(da.recoverPassword(email,encodedPassword)) {
+			sendEmail(email,"ELibrary Password Recovery", message);
+			model.addAttribute("message","A password recovery email has been successfully sent and should arrive momentarily");
+		}else {
+			model.addAttribute("message","Email does not exist");
+			return "recover-account";
+		}
+		return "login";
+	}
+	@GetMapping("/user/myBooks")
+	public String goMyBooks(Authentication auth, Model model) {
+		if(auth != null) {
+			String userName = auth.getName();
+			System.out.println(userName);
+			List<Book> books = da.getMyBooks(da.getUser(userName).getId());
+			model.addAttribute("books",books);
+			model.addAttribute("userName",userName);
+			System.out.println(books);
+		}
+		return "user/myBooks";
+	}
+		
+	@GetMapping("addMyBooks/{bookId}")
+	public String addMyBooks(Model model, @PathVariable Long bookId,Authentication auth) {
+		if(auth != null) {
+			String userName = auth.getName();
+			da.addMyBook(bookId,da.getUser(userName).getId());
+			model.addAttribute("userName",userName);
+			return "redirect:/viewBook/" + bookId;
+		}
+		return "redirect:/";
+	}
+	@GetMapping("deleteMyBooks/{bookId}")
+	public String deleteMyBooks(Model model, @PathVariable Long bookId,Authentication auth) {
+		if(auth != null) {
+			String userName = auth.getName();
+			da.deleteMyBook(bookId,da.getUser(userName).getId());
+			model.addAttribute("userName",userName);
+			return "redirect:/viewBook/" + bookId;
+		}
+		return "redirect:/";
+	}
+	public String generatePassword() {
+		String chars ="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		StringBuilder string = new StringBuilder();
+		Random rnd = new Random();
+		while(string.length() < 10){
+			int index = (int)(rnd.nextFloat() * chars.length());
+			string.append(chars.charAt(index));
+		}
+		String password = string.toString();
+		return password;
+	}
+	public void sendEmail(String recipient, String subject, String text) {
+		String from = "nickdelucrative@gmail.com";
+		String to = recipient;
+
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom(from);
+		message.setTo(to);
+		message.setSubject(subject);
+		message.setText(text);
+		 
+		mailSender.send(message);
+	}
+	
 	/**
 	 * This method adds new users to the database
 	 * if the username does not already exist
@@ -87,15 +167,14 @@ public class HomeController {
 	 * @return the name of the home template
 	 */
 	@GetMapping("/")
-	public String goHome(Authentication auth, Model model) {
+	public String goHome(Authentication auth,Model model) {
 		
 		if (auth != null) {
-			String userName = auth.getName();
 			List<String> roles = new ArrayList<>();
 			for (GrantedAuthority authority : auth.getAuthorities()) {
 				roles.add(authority.getAuthority());
 			}
-			model.addAttribute("userName", userName);
+			model.addAttribute("userName", auth.getName());
 			model.addAttribute("roles", roles);
 		}
 		da.aveReviews();
@@ -153,16 +232,55 @@ public class HomeController {
 	 */
 	@GetMapping("viewBook/{bookID}")
 	public String goToReview(Model model, @PathVariable long bookID, Authentication auth) {
-		if (auth != null) {
-			model.addAttribute("userName", auth.getName());
-		}
 		da.aveReviews();
 		List<Review> reviews = da.getReviews(bookID);
 		model.addAttribute("reviews", reviews);
 		Book book = da.getBook(bookID);
 		model.addAttribute("book", book);
-		
+		if (auth != null) {
+			model.addAttribute("userName", auth.getName());
+			List<Book> books = da.getMyBooks(da.getUser(auth.getName()).getId());
+			if(books.contains(book)) {
+				model.addAttribute("favourited","favourited");
+				System.out.println("the book was favourited");
+			}
+		}
 		return "view-book";
+	}
+	@GetMapping("user/account")
+	public String GoAccount(Authentication auth,Model model) {
+		if(auth !=null) {
+			String userName = auth.getName();
+			model.addAttribute("user",da.getUser(userName));
+		}
+		return "user/account";
+	}
+	@PostMapping("updateUser/{id}")
+	public String updateUser(@PathVariable long id, Model model,@RequestParam String username,
+			@RequestParam String email, @RequestParam String password,Authentication auth) {
+		User user = new User();
+		if(password !="")
+			user.setPassword(passwordEncoder.encode(password));
+		user.setEmail(email);
+		user.setUsername(username);
+		user.setId(id);
+		try {
+			System.out.println("updated user");
+			da.updateUser(user);
+			
+		}catch(Exception e) {
+			if(auth!=null)
+				model.addAttribute("user",da.getUser(auth.getName()));
+			model.addAttribute("message","Username already exists! Try again.");
+			return "/user/account";
+		}
+		model.addAttribute("user",da.getUser(username));
+		model.addAttribute("message","User details were sucessfully updated");
+		
+		auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication newAuth = new UsernamePasswordAuthenticationToken(username, auth.getCredentials(),auth.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(newAuth);
+		return "/user/account";
 	}
 	/**
 	 * This method maps the /addPage get request to the
@@ -203,6 +321,10 @@ public class HomeController {
 	@GetMapping("permission-denied")
 	public String error() {
 		return "error/permission-denied";
+	}
+	@GetMapping("recover-account")
+	public String recover() {
+		return "recover-account";
 	}
 
 }

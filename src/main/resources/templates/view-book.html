@@ -14,9 +14,6 @@
 	<header>
 		<img src="/img/elibrary.png">
 		<div class ="background"></div>
-		<div th:if="${reviews.empty}">
-			<h1>There are no reviews!</h1>
-		</div>
 		
 		<h2 class ="top-left"><a onclick="goBack()">Go Back</a></h2>
 		<div sec:authorize="hasAnyRole('USER','MANAGER')">
@@ -32,8 +29,8 @@
 	</div>
 	<nav class ="topnav" id ="myTopnav">
 		<span><a class = "homenav" href ="/"><div>Browse</div></a></span>
-		<a href ="/mybooks">MyBooks</a>
-		<a href ="/account">Account</a>
+		<a href ="/user/myBooks">MyBooks</a>
+		<a href ="/user/account">Account</a>
 		<a sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
 			Add a Book
 		</a>
@@ -50,12 +47,31 @@
 		</a>
 	</nav>
 	
-	
-	<section class ="view-flex-container">
+	<section>
+		<p>
+			<div class="top-right" sec:authorize="hasAnyRole('USER','MANAGER')">
+				<div th:if="${favourited}" class ="flex-container">
+					<p>favourited</p> 
+					<p><div class="favourite">
+						<div class ="favourited"></div>
+						<a href ="#" th:href="@{/deleteMyBooks/} +${book.id}" class="favourite">
+							<img src ="/img/favourite-star.png">
+						</a>
+					</div></p>
+				</div>
+				<div th:unless="${favourited}" class ="flex-container">
+					<p>favourite</p> 
+					<a href ="#" th:href="@{/addMyBooks/} +${book.id}" class="favourite">
+						<img src ="/img/favourite-star.png">
+					</a>
+				</div>
+			</div>
+		</p>
+	<div class ="view-flex-container">
 		<div class ="flex-container2" >
 			<div>
 				<img class ="book-cover" th:src="@{${book.img}}">
-				<h2 ><a href="#" th:href="@{/user/addReview/} +${book.id}">Add Review</a></h2>
+				<h2><a href="#" th:href="@{/user/addReview/} +${book.id}">Add Review</a></h2>
 			</div>
 			<div class ="book-details">
 				<p>
@@ -72,17 +88,19 @@
 		<div class ="description">
 			<p th:text ="${book.description}">follows the journey of Brian the snail, an adventure you'll never forget</p>
 		</div>
-		
+		</div>
 	</section>
-	
+	<div th:if="${reviews.empty}">
+		<h1>There are no reviews!</h1>
+	</div>
 	<div th:unless="${reviews.empty}">
 		<section class ="flex-container">
 			<div th:each="review : ${reviews}" class="review-container">
 				<div class ="starcontainer" >
 					<img src ="/img/stars.png">
 					<div class ="starbar" th:style="|width: calc(20% * ${review.stars})|"></div>
-					<h3 th:text="${review.username}">jonny937</h3>
 				</div>
+				<h3 th:text="${review.username}">jonny937</h3>
 
 				<p th:text="${review.text}">it was great</p>
 			</div>
