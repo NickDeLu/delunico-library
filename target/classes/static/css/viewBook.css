@@ -1,0 +1,26 @@
+
+.view-flex-container{
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	flex-flow:wrap;
+}
+.flex-container2{
+	width:100%;
+	
+}
+.book-details{
+	width:400px;
+}
+.description{
+	max-width:500px;
+}
+p{
+	line-height: 2;
+}
+@media screen and (max-width:367px){
+	.book-details p{
+		margin:0;
+		padding:0;
+	}
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="/css/main.css">
+<script src="../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log In</title>
+
+</head>
+<body>
+	<header>
+		<img src="/img/elibrary.png">
+		<div class ="background"></div>
+		<h2 class ="top-left"><a onclick="goBack()">Go Back</a></h2>
+	</header>
+	<nav class ="topnav" id ="myTopnav">
+		<span><a class = "homenav" href ="/"><div>Browse</div></a></span>
+		<a href ="/user/myBooks">MyBooks</a>
+		<a href ="/user/account">Account</a>
+		<a sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
+			Add a Book
+		</a>
+		<div class ="search-container">
+			<form action="/search">
+				
+				<input type="text" placeholder="Search.." name="search">
+				
+				<button type="submit"><i class="fa fa-search"></i></button>
+			</form>
+		</div>
+		<a class ="icon"  href="javascript:void(0);" onclick="hamburger()">
+			<i class ="fa fa-bars"></i>
+		</a>
+	</nav>
+	<section class ="flex-container">
+		
+		<form action="#" th:action="@{/login}" method="post" >
+			<div th:if="${param.logout}" class="error">
+				<h1>You are now logged out</h1>
+			</div>
+			<div th:if="${param.error}" class="error">
+				<h1>Invalid username or password</h1>
+			</div>
+			<div th:if="${message}" class="error">
+				<h1 th:text="${message}"></h1>
+			</div>
+			<p>
+				<input type="text" name="username" placeholder="Enter Username"required />
+			</p>
+			<p>
+				<input type="password" name="password" placeholder=" Enter Password"required />
+			</p>
+			<input type="submit" value="login">
+			<h1>Not a member?</h1>
+			<h2><a href="/register">Register Here</a></h2>
+			<h1>forgot your password?</h1><h2><a href="/recover-account">Recover Now</a></h2>
+		</form>
+		
+	</section>
+</body>
+</html>
