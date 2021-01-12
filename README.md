@@ -8,7 +8,8 @@ Your password can be recovered at <a href = "https://delunico-library.herokuapp.
  Only authorized manager role users can access and view the add a book link located in the nav bar.<br>
  Only Users can write reviews and access MyBooks and Account pages
  ####  Free Accounts ####
- There are two free accounts for you to try out if you dont want to make your own!<br>
+ There are two free accounts for you to try out if you dont want to make your own!
+<br>
 Manager Account: 
 <ul>
   <li>Username: daffy</li>
