@@ -272,7 +272,7 @@ public class HomeController {
 			if(auth!=null)
 				model.addAttribute("user",da.getUser(auth.getName()));
 			model.addAttribute("message","Username already exists! Try again.");
-			return "/user/account";
+			return "user/account";
 		}
 		model.addAttribute("user",da.getUser(username));
 		model.addAttribute("message","User details were sucessfully updated");
@@ -280,7 +280,7 @@ public class HomeController {
 		auth = SecurityContextHolder.getContext().getAuthentication();
 		Authentication newAuth = new UsernamePasswordAuthenticationToken(username, auth.getCredentials(),auth.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(newAuth);
-		return "/user/account";
+		return "user/account";
 	}
 	/**
 	 * This method maps the /addPage get request to the
