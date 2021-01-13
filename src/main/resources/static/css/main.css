@@ -317,6 +317,7 @@ section{
 	display:flex;
 	flex-direction:row;
 	max-width:300px;
+	width:300px;
 	padding-right:20px;
 	height:230px;
 }
