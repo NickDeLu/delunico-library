@@ -188,7 +188,7 @@ public class DatabaseAccess {
 			.addValue("username", user.getUsername())
 			.addValue("password", user.getPassword())
 			.addValue("email", user.getEmail())
-			.addValue("enabled", 1)
+			.addValue("enabled", "true")
 			.addValue("authority", "ROLE_USER");
 
 		jdbc.update(query, namedParameters);
