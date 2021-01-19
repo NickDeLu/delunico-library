@@ -58,7 +58,7 @@ public class HomeController {
 		}
 		return "login";
 	}
-	@GetMapping("/user/myBooks")
+	@GetMapping("user/myBooks")
 	public String goMyBooks(Authentication auth, Model model) {
 		if(auth != null) {
 			String userName = auth.getName();
@@ -139,6 +139,7 @@ public class HomeController {
 			model.addAttribute("message", "User successfully added");
 
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			List<String> allAuthorities = da.getAuthorities();
 			model.addAttribute("message", "User already exists");
 			model.addAttribute("authorities", allAuthorities);
@@ -168,7 +169,6 @@ public class HomeController {
 	 */
 	@GetMapping("/")
 	public String goHome(Authentication auth,Model model) {
-		
 		if (auth != null) {
 			List<String> roles = new ArrayList<>();
 			for (GrantedAuthority authority : auth.getAuthorities()) {
