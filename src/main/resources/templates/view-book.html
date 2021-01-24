@@ -39,32 +39,33 @@
 				</div>
 			</div>
 		</p>
-	<div class ="view-flex-container">
-		<div class ="flex-container2" >
-			<div>
-				<img class ="book-cover" th:src="@{${book.img}}">
-				<h2><a href="#" th:href="@{/user/addReview/} +${book.id}">Add Review</a></h2>
+		<div class ="view-flex-container">
+			<div class ="flex-container2" >
+				<div>
+					<img class ="book-cover" th:src="@{${book.img}}">
+					<h2><a href="#" th:href="@{/user/addReview/} +${book.id}">Add Review</a></h2>
+				</div>
+				<div class ="book-details">
+					<p>
+					<h3 th:text="${book.title}"></h3>
+						<p th:text="|By: ${book.author}|"></p>
+						<div class ="starcontainer">
+							<p th:text="|${book.aveStars} stars|">jonny937</p>
+							<img src ="/img/stars.png">
+							<div class ="starbar" th:style="|width: calc(20% * ${book.aveStars})|"></div>
+						</div></p>
+				</div>
 			</div>
-			<div class ="book-details">
-				<p>
-				<h3 th:text="${book.title}"></h3>
-					<p th:text="|By: ${book.author}|"></p>
-					<div class ="starcontainer">
-						<p th:text="|${book.aveStars} stars|">jonny937</p>
-						<img src ="/img/stars.png">
-						<div class ="starbar" th:style="|width: calc(20% * ${book.aveStars})|"></div>
-					</div></p>
+	
+			<div class ="description">
+				<p th:text ="${book.description}">follows the journey of Brian the snail, an adventure you'll never forget</p>
 			</div>
 		</div>
-
-		<div class ="description">
-			<p th:text ="${book.description}">follows the journey of Brian the snail, an adventure you'll never forget</p>
-		</div>
+		<div th:if="${reviews.empty}" class ="center-container">
+			<h2>There are no reviews!</h2>
 		</div>
 	</section>
-	<div th:if="${reviews.empty}">
-		<h1>There are no reviews!</h1>
-	</div>
+	
 	<div th:unless="${reviews.empty}">
 		<section class ="flex-container">
 			<div th:each="review : ${reviews}" class="review-container">

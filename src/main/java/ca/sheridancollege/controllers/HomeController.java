@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ca.sheridancollege.beans.Book;
@@ -60,6 +62,7 @@ public class HomeController {
 	}
 	@GetMapping("user/myBooks")
 	public String goMyBooks(Authentication auth, Model model) {
+		auth = resetAuthentication(auth);
 		if(auth != null) {
 			String userName = auth.getName();
 			System.out.println(userName);
@@ -167,15 +170,22 @@ public class HomeController {
 	 * @param model where to store the userName, roles, and books
 	 * @return the name of the home template
 	 */
-	@GetMapping("/")
-	public String goHome(Authentication auth,Model model) {
-		
-		if (auth != null) {
+	public Authentication resetAuthentication(Authentication auth) {
+		if(auth!=null) {
 			if(da.getUsername(auth.getName()) !=null){
 				Authentication newAuth = new UsernamePasswordAuthenticationToken(da.getUsername(auth.getName()), auth.getCredentials(),auth.getAuthorities());
 				SecurityContextHolder.getContext().setAuthentication(newAuth);
 				auth = SecurityContextHolder.getContext().getAuthentication();
 			}
+		}
+		return auth;
+	}
+
+	@GetMapping("/")
+	public String goHome(Authentication auth,Model model) {
+		
+		if (auth != null) {
+			
 			List<String> roles = new ArrayList<>();
 			for (GrantedAuthority authority : auth.getAuthorities()) {
 				roles.add(authority.getAuthority());
@@ -223,6 +233,7 @@ public class HomeController {
 	 */
 	@GetMapping("user/addReview/{bookID}")
 	public String AddReview(@PathVariable long bookID, Model model, Authentication auth) {
+		auth = resetAuthentication(auth);
 		model.addAttribute("book", da.getBook(bookID));
 		model.addAttribute("review", new Review());
 		model.addAttribute("username", auth.getName());
@@ -255,6 +266,7 @@ public class HomeController {
 	}
 	@GetMapping("user/account")
 	public String GoAccount(Authentication auth,Model model) {
+		auth = resetAuthentication(auth);
 		if(auth !=null) {
 			String userName = auth.getName();
 			model.addAttribute("user",da.getUser(userName));
@@ -296,6 +308,7 @@ public class HomeController {
 	 */
 	@GetMapping("admin/addPage")
 	public String managerIndex(Model model,Authentication auth) {
+		auth = resetAuthentication(auth);
 		model.addAttribute("book", new Book());
 		model.addAttribute("username",auth.getName());
 		return "admin/add-book";
@@ -306,7 +319,7 @@ public class HomeController {
 	 * @return the name of the login template
 	 */
 	@GetMapping("login")
-	public String login() {
+	public String login() {	
 		return "login";
 	}
 	/**
