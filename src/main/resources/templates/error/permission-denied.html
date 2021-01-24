@@ -3,10 +3,16 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Permission Denied</title>
+<link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-	<h1>Permission denied</h1>
-	<h2>Your do not have access to this area</h2>
-	<h3>Authenticate <a href="#" th:href="@{/login}">here</a></h3>
+	<header th:insert="fragments/header.html :: page-header"></header>
+	<div th:insert="fragments/nav.html :: page-nav"></div>
+	<section>
+		<h2>Permission denied</h2>
+		<p>Your do not have access to this area</p>
+		<h2>Authenticate <a href="#" th:href="@{/login}">here</a></h2>
+	</section>
 </body>
+<div th:insert="fragments/footer.html :: page-footer"></div>
 </html>

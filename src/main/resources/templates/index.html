@@ -11,73 +11,39 @@
 
 </head>
 <body>
-	<header>
-		<img src="/img/elibrary.png">
-		<div class ="background"></div>
-		<div sec:authorize="hasAnyRole('USER','MANAGER')" >
-			<h1 class ="top-left" th:text="|Hi ${userName}!|">Welcome!</h1>
-			<h2 class = "top-right"><a href="#" th:href="@{/logout}">Logout</a></h2>
+	<header th:insert="fragments/header.html :: page-header"></header>
+	<div th:insert="fragments/nav.html :: page-nav"></div>
+	
+	<section th:unless="${books.empty}">
+		<div th:if="${message}" class="error" align="center">
+			<h2 th:text="${message}"></h2>
 		</div>
-
-		<div th:unless="${roles}" class = "top-right">
-			<h2><a href="#" th:href="@{/login}">Login</a></h2>
-			<h2><a href="#" th:href="@{/register}">Sign Up</a></h2>
-		</div>
-		
-	</header>
-
-	<div th:unless="${books.empty}">
-
-		<nav class ="topnav" id ="myTopnav">
-			<span class ="active"><a class = "homenav" href ="/"><div>Browse</div></a></span>
-			<a href ="/user/myBooks">MyBooks</a>
-			<a href ="/user/account">Account</a>
-			<a sec:authorize="hasRole('ROLE_MANAGER')" href="#" th:href="@{/admin/addPage}">
-				Add a Book
-			</a>
-			<div class ="search-container">
-				<form action="/search">
-					
-					<input type="text" placeholder="Search.." name="search">
-					
-					<button type="submit"><i class="fa fa-search"></i></button>
-				</form>
+		<div class ="flex-container">
+			
+			<div th:if="${books.empty}">
+				<h2 th:text="|There are no books!|">The database is empty!</h2>
 			</div>
-			<a class ="icon"  href="javascript:void(0);" onclick="hamburger()">
-				<i class ="fa fa-bars"></i>
-			</a>
-		</nav>
-
-		<section >
-			<div th:if="${message}" class="error" align="center">
-				<h2 th:text="${message}"></h2>
-			</div>
-			<div class ="flex-container">
-				
-				<div th:if="${books.empty}">
-					<h2 th:text="|There are no books!|">The database is empty!</h2>
-				</div>
-				<div class ="flex-container2" th:each="book : ${books}">
-					<p><a href ="" th:href="@{/viewBook/} + ${book.id}"><img class ="book-cover" th:src="@{${book.img}}"></a></p>
-					<div class ="book-details">
-						<p>
-							<div class ="twoline">
-								<h3>
-									<a href ="" th:href="@{/viewBook/} + ${book.id}" 
-									th:text="${book.title}"></a>
-								</h3>
-							</div>
-							<p class="oneline" th:text="|By: ${book.author}|"></p>
-							<div class ="starcontainer">
-								<p th:text="|${book.aveStars} stars|">jonny937</p>
-								<img src ="/img/stars.png">
-								<div class ="starbar" th:style="|width: calc(20% * ${book.aveStars})|"></div>
-							</div>
-						</p>
-					</div>
+			<div class ="flex-container2" th:each="book : ${books}">
+				<p><a href ="" th:href="@{/viewBook/} + ${book.id}"><img class ="book-cover" th:src="@{${book.img}}"></a></p>
+				<div class ="book-details">
+					<p>
+						<div class ="twoline">
+							<h3>
+								<a href ="" th:href="@{/viewBook/} + ${book.id}" 
+								th:text="${book.title}"></a>
+							</h3>
+						</div>
+						<p class="oneline" th:text="|By: ${book.author}|"></p>
+						<div class ="starcontainer">
+							<p th:text="|${book.aveStars} stars|">jonny937</p>
+							<img src ="/img/stars.png">
+							<div class ="starbar" th:style="|width: calc(20% * ${book.aveStars})|"></div>
+						</div>
+					</p>
 				</div>
 			</div>
-		</section>
-	</div>
+		</div>
+	</section>
 </body>
+<div th:insert="fragments/footer.html :: page-footer"></div>
 </html>

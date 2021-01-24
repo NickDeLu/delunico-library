@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Links</title>
+</head>
+<body>
+	<div th:fragment="page-nav">
+		<nav class ="topnav" id ="myTopnav">
+			<span class ="active"><a class = "homenav" href ="/"><div>Browse</div></a></span>
+			<a href ="/user/myBooks">MyBooks</a>
+			<a href ="/user/account">Account</a>
+			<a sec:authorize="hasRole('ROLE_MANAGER')" 
+				href="#" th:href="@{/admin/addPage}">Add a Book</a>
+			<div class ="search-container">
+				<form action="/search">
+					<input type="text" placeholder="Search.." name="search">
+					<button type="submit"><i class="fa fa-search"></i></button>
+				</form>
+			</div>
+			<a class ="icon"  href="javascript:void(0);" onclick="hamburger()">
+				<i class ="fa fa-bars"></i>
+			</a>
+		</nav>
+	</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:fragment ="html-head">
+<meta charset="ISO-8859-1">
+<title>Thymeleaf Fragments</title>
+<link rel ="stylesheet" href="/css/styles.css">
+</head>
+<body>
+	<div th:fragment="page-header">
+		<img src="/img/elibrary.png">
+		<div class ="background"></div>
+		<div sec:authorize="hasAnyRole('USER','MANAGER')">
+			<div class ="top-right">
+				<h1 th:text="|Hi ${username}!|">Welcome!</h1>
+				<h2><a href="#" th:href="@{/logout}">Logout</a></h2>
+			</div>
+		</div>
+		<h2 class ="top-left"><a onclick="goBack()">Go Back</a></h2>
+	
+		<div th:unless="${username}" class = "top-right">
+			<h2><a href="#" th:href="@{/login}">Login</a></h2>
+			<h2><a href="#" th:href="@{/register}">Sign Up</a></h2>
+		</div>
+	</div>
+</body>
+</html>

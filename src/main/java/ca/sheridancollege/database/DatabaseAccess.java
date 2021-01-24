@@ -153,6 +153,24 @@ public class DatabaseAccess {
 			return user.get(0);
 		}
 	}
+	public String getUsername(String email) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		
+		String query = "SELECT username FROM user_table WHERE email = :email";
+		params
+		.addValue("email", email);
+		
+		BeanPropertyRowMapper<User> userMapper = 
+				new BeanPropertyRowMapper<User>(User.class);
+		
+		List<User> user = jdbc.query(query, params, userMapper);
+		
+		if(user.isEmpty()) {
+			return null;
+		}else {
+			return user.get(0).getUsername();
+		}
+	}
 	/**
 	 * This method adds a review to the review table in 
 	 * the h2 database with a given bookID and review

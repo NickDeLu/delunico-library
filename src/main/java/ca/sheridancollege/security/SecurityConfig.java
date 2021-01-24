@@ -5,18 +5,26 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
+import ca.sheridancollege.database.DatabaseAccess;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private LoggingAccessDeniedHandler accessDeniedHandler;
+	
+	@Autowired
+	DatabaseAccess da;
 	
 	@Autowired
 	private DataSource dataSource;
@@ -68,7 +76,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .authoritiesByUsernameQuery(
                 "select username, authority from authorities where username=?")
 		.passwordEncoder(passwordEncoder);//auto injected at the top of page
-		System.out.println(passwordEncoder.encode("bunny"));
-		System.out.println(passwordEncoder.encode("duck"));
+		
+		auth.jdbcAuthentication()
+		.dataSource(dataSource)
+		.usersByUsernameQuery(
+                "select email,password, enabled from user_table where email=?")
+        .authoritiesByUsernameQuery(
+                "select user_table.username,authority from authorities inner join user_table on user_table.id=authorities.userid where email=?")
+		.passwordEncoder(passwordEncoder);//auto injected at the top of page
 	}
+	
+	
 }

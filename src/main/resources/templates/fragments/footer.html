@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Footer</title>
+</head>
+<body>
+	<div th:fragment="page-footer">
+		<footer class ="flex-container">
+			<div>
+				<a href ="#" th:href ="@{https://www.linkedin.com/in/nickdelu/}">
+					<div class ="fa fa-linkedin-square"></div>
+					LinkedIn
+				</a>
+				<a href ="#" th:href ="@{https://github.com/NickDeLu}">
+					<div class ="fa fa-github-square"></div>
+					GitHub
+				</a> 
+			</div>
+			Copyright &copy; Nick De Luca
+		</footer>
+	</div>
+</body>
+</html>

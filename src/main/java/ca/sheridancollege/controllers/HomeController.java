@@ -65,7 +65,7 @@ public class HomeController {
 			System.out.println(userName);
 			List<Book> books = da.getMyBooks(da.getUser(userName).getId());
 			model.addAttribute("books",books);
-			model.addAttribute("userName",userName);
+			model.addAttribute("username",userName);
 			System.out.println(books);
 		}
 		return "user/myBooks";
@@ -76,7 +76,7 @@ public class HomeController {
 		if(auth != null) {
 			String userName = auth.getName();
 			da.addMyBook(bookId,da.getUser(userName).getId());
-			model.addAttribute("userName",userName);
+			model.addAttribute("username",userName);
 			return "redirect:/viewBook/" + bookId;
 		}
 		return "redirect:/";
@@ -86,7 +86,7 @@ public class HomeController {
 		if(auth != null) {
 			String userName = auth.getName();
 			da.deleteMyBook(bookId,da.getUser(userName).getId());
-			model.addAttribute("userName",userName);
+			model.addAttribute("username",userName);
 			return "redirect:/viewBook/" + bookId;
 		}
 		return "redirect:/";
@@ -169,12 +169,18 @@ public class HomeController {
 	 */
 	@GetMapping("/")
 	public String goHome(Authentication auth,Model model) {
+		
 		if (auth != null) {
+			if(da.getUsername(auth.getName()) !=null){
+				Authentication newAuth = new UsernamePasswordAuthenticationToken(da.getUsername(auth.getName()), auth.getCredentials(),auth.getAuthorities());
+				SecurityContextHolder.getContext().setAuthentication(newAuth);
+				auth = SecurityContextHolder.getContext().getAuthentication();
+			}
 			List<String> roles = new ArrayList<>();
 			for (GrantedAuthority authority : auth.getAuthorities()) {
 				roles.add(authority.getAuthority());
 			}
-			model.addAttribute("userName", auth.getName());
+			model.addAttribute("username", auth.getName());
 			model.addAttribute("roles", roles);
 		}
 		da.aveReviews();
@@ -204,7 +210,7 @@ public class HomeController {
 		model.addAttribute("search",search);
 		model.addAttribute("books",books);
 		if (auth != null) {
-			model.addAttribute("userName", auth.getName());
+			model.addAttribute("username", auth.getName());
 		}
 		return "results";
 	}
@@ -219,7 +225,7 @@ public class HomeController {
 	public String AddReview(@PathVariable long bookID, Model model, Authentication auth) {
 		model.addAttribute("book", da.getBook(bookID));
 		model.addAttribute("review", new Review());
-		model.addAttribute("userName", auth.getName());
+		model.addAttribute("username", auth.getName());
 		return "user/add-review";
 	}
 	/**
@@ -238,7 +244,7 @@ public class HomeController {
 		Book book = da.getBook(bookID);
 		model.addAttribute("book", book);
 		if (auth != null) {
-			model.addAttribute("userName", auth.getName());
+			model.addAttribute("username", auth.getName());
 			List<Book> books = da.getMyBooks(da.getUser(auth.getName()).getId());
 			if(books.contains(book)) {
 				model.addAttribute("favourited","favourited");
@@ -252,6 +258,7 @@ public class HomeController {
 		if(auth !=null) {
 			String userName = auth.getName();
 			model.addAttribute("user",da.getUser(userName));
+			model.addAttribute("username",userName);
 		}
 		return "user/account";
 	}
@@ -288,8 +295,9 @@ public class HomeController {
 	 * @return the path to the add-book template
 	 */
 	@GetMapping("admin/addPage")
-	public String managerIndex(Model model) {
+	public String managerIndex(Model model,Authentication auth) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("username",auth.getName());
 		return "admin/add-book";
 	}
 	/**

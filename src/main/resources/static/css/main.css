@@ -307,6 +307,24 @@ section{
 	padding: 20px 20px 60px 20px;
 	position:relative;
 }
+footer{
+	color:white;
+	font-family:arial;
+	font-size:25px;
+	background-color: rgb(13, 41, 77);
+	height:100px;
+	padding:30px;
+	align-items: center;
+    justify-content: center;
+}
+footer a{
+	text-decoration:none;
+	color:white;
+	font-family:arial;
+	padding:10px 12px;
+	cursor:pointer;
+	font-weight: bold;
+}
 .flex-container{
 	display:flex;
 	flex-direction:row;
