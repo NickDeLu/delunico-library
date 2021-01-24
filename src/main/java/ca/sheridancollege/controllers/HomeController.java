@@ -183,7 +183,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String goHome(Authentication auth,Model model) {
-		
+		auth = resetAuthentication(auth);
 		if (auth != null) {
 			
 			List<String> roles = new ArrayList<>();
