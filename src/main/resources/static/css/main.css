@@ -166,19 +166,45 @@ h2 a, input[type="submit"]{
 }
 .search-container{
 	display:inline-block;
-	width:30%;
+	width:400px;
 }
-
-
+.autocomplete-items {
+  position: absolute;
+  text-align:center;
+  height:35%;
+  height:auto;
+  width:340px;
+  border: 1px solid rgb(20, 63, 120);
+}
+.autocomplete-items div {
+  color:rgb(20, 63, 120);
+  font-family:arial;
+  padding: 10px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
 @media screen and (max-width:760px){
 	.topnav a:not(:last-child){
 		opacity:0;
 		transform: translateY(-2em);
 		position:absolute;
 	}
-	.topnav .search-container{display:inline-block;}
 	.topnav a.icon{
+		margin:none;
+		padding:4px 10px;
 		display:inline-block;
+		background-color:rgb(13, 41, 77);
+		font-size:25px;
 	}
 	.homenav{
 		float:left;
@@ -190,7 +216,7 @@ h2 a, input[type="submit"]{
 		top:0;
 	}
 	.search-container{
-		width:50%;
+		width:60%;
 		margin-top:5px;
 	}
 	.topnav.responsive a {
@@ -206,8 +232,11 @@ h2 a, input[type="submit"]{
 	.topnav.responsive .search-container{
 		display:none;
 	}
+	.autocomplete-items {
+		width:50%;
+	}
 }
-@media screen and (max-width:650px){
+@media screen and (max-width:450px){
 	.homenav:after{
 		content:'\f015';
 		 font-family: FontAwesome;
@@ -215,15 +244,6 @@ h2 a, input[type="submit"]{
 	.homenav div{
 		display:none;
 	}	
-	.search-container{
-		width:60%;
-	}
-}
-
-@media screen and (max-width:367px){
-	.search-container{
-		width:50%;
-	}
 }
 
 th{
@@ -305,7 +325,7 @@ section{
 	border-left:10px solid rgb(13, 41, 77);
 	border-right:10px solid rgb(13, 41, 77);
 	padding: 20px 20px 60px 20px;
-	position:relative;
+
 }
 footer{
 	color:white;
@@ -367,3 +387,4 @@ footer a{
 .book-details .twoline{
 	height:65px;
 }
+

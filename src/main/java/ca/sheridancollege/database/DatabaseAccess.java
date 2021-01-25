@@ -1,5 +1,6 @@
 package ca.sheridancollege.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,22 @@ public class DatabaseAccess {
 		
 		List<Book> books = jdbc.query(query, params, bookMapper);
 		return books;
+	}
+	public List<String> allBooks() {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		
+		String query = "SELECT * FROM books";
+		
+		BeanPropertyRowMapper<Book> bookMapper = 
+				new BeanPropertyRowMapper<Book>(Book.class);
+		
+		List<Book> books = jdbc.query(query, params, bookMapper);
+		ArrayList<String> allBooks = new ArrayList<String>();
+		for (Book book : books) {
+			allBooks.add(book.getTitle()); 
+		}
+		System.out.println(allBooks.toString());
+		return allBooks;
 	}
 	/**
 	 * This method adds a given book to the book table
@@ -226,11 +243,7 @@ public class DatabaseAccess {
 		
 		List<Book> books = jdbc.query(query, params, bookMapper);
 		
-		if(books.isEmpty()) {
-			return null;
-		}else {
-			return books;
-		}	
+		return books;
 	}
 	public boolean recoverPassword(String email,String newPassword) {
 		MapSqlParameterSource params = new MapSqlParameterSource();

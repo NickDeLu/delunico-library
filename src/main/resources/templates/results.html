@@ -15,9 +15,13 @@
 
 	<div th:insert="fragments/nav.html :: page-nav"></div>
 	
-	<div th:unless="${books.empty}">
-
-		<section>
+	
+	<section>
+		<div th:if="${books.empty}">
+			<h3 align ="center" th:text="|There are no results for ${search}|"></h3>
+		</div>
+		
+		<div th:unless="${books.empty}">
 			<h3 align ="center" th:text="|Results for ${search}|"></h3>
 			<div class ="flex-container">
 				<div class ="flex-container2" th:each="book : ${books}">
@@ -40,8 +44,9 @@
 					</div>
 				</div>
 			</div>
-		</section>
-	</div>
+		</div>
+	</section>
+	
 </body>
 <div th:insert="fragments/footer.html :: page-footer"></div>
 </html>

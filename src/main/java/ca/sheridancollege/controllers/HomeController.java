@@ -58,6 +58,7 @@ public class HomeController {
 			model.addAttribute("message","Email does not exist");
 			return "recover-account";
 		}
+		model.addAttribute("allbooks",da.allBooks());
 		return "login";
 	}
 	@GetMapping("user/myBooks")
@@ -71,6 +72,7 @@ public class HomeController {
 			model.addAttribute("username",userName);
 			System.out.println(books);
 		}
+		model.addAttribute("allbooks",da.allBooks());
 		return "user/myBooks";
 	}
 		
@@ -130,6 +132,7 @@ public class HomeController {
 	@PostMapping("addUser")
 	public String addUser(@RequestParam String userName, @RequestParam String password,
 			@RequestParam String[] authorities, @RequestParam String email,Model model) {
+		model.addAttribute("allbooks",da.allBooks());
 		try {
 			List<GrantedAuthority> authorityList = new ArrayList<>();
 
@@ -196,6 +199,7 @@ public class HomeController {
 		da.aveReviews();
 		List<Book> books = da.getBooks();
 		model.addAttribute("books", books);
+		model.addAttribute("allbooks",da.allBooks());
 		return "index";
 
 	}
@@ -222,6 +226,7 @@ public class HomeController {
 		if (auth != null) {
 			model.addAttribute("username", auth.getName());
 		}
+		model.addAttribute("allbooks",da.allBooks());
 		return "results";
 	}
 	/**
@@ -237,6 +242,7 @@ public class HomeController {
 		model.addAttribute("book", da.getBook(bookID));
 		model.addAttribute("review", new Review());
 		model.addAttribute("username", auth.getName());
+		model.addAttribute("allbooks",da.allBooks());
 		return "user/add-review";
 	}
 	/**
@@ -262,6 +268,7 @@ public class HomeController {
 				System.out.println("the book was favourited");
 			}
 		}
+		model.addAttribute("allbooks",da.allBooks());
 		return "view-book";
 	}
 	@GetMapping("user/account")
@@ -272,6 +279,7 @@ public class HomeController {
 			model.addAttribute("user",da.getUser(userName));
 			model.addAttribute("username",userName);
 		}
+		model.addAttribute("allbooks",da.allBooks());
 		return "user/account";
 	}
 	@PostMapping("updateUser/{id}")
@@ -283,6 +291,7 @@ public class HomeController {
 		user.setEmail(email);
 		user.setUsername(username);
 		user.setId(id);
+		model.addAttribute("allbooks",da.allBooks());
 		try {
 			System.out.println("updated user");
 			da.updateUser(user);
@@ -311,6 +320,7 @@ public class HomeController {
 		auth = resetAuthentication(auth);
 		model.addAttribute("book", new Book());
 		model.addAttribute("username",auth.getName());
+		model.addAttribute("allbooks",da.allBooks());
 		return "admin/add-book";
 	}
 	/**
@@ -319,7 +329,8 @@ public class HomeController {
 	 * @return the name of the login template
 	 */
 	@GetMapping("login")
-	public String login() {	
+	public String login(Model model) {	
+		model.addAttribute("allbooks",da.allBooks());
 		return "login";
 	}
 	/**
@@ -332,6 +343,7 @@ public class HomeController {
 	public String register(Model model) {
 		List<String> authorities = da.getAuthorities();
 		model.addAttribute("userAuthority", authorities.get(0));
+		model.addAttribute("allbooks",da.allBooks());
 		return "register";
 	}
 	/**
@@ -340,11 +352,13 @@ public class HomeController {
 	 * @return the path to the permission-denied template
 	 */
 	@GetMapping("permission-denied")
-	public String error() {
+	public String error(Model model) {
+		model.addAttribute("allbooks",da.allBooks());
 		return "error/permission-denied";
 	}
 	@GetMapping("recover-account")
-	public String recover() {
+	public String recover(Model model) {
+		model.addAttribute("allbooks",da.allBooks());
 		return "recover-account";
 	}
 
