@@ -173,6 +173,7 @@ h2 a, input[type="submit"]{
   text-align:center;
   height:35%;
   height:auto;
+  z-index:111;
   width:340px;
   border: 1px solid rgb(20, 63, 120);
 }

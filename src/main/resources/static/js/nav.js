@@ -56,7 +56,9 @@ function autocomplete(inp, Jarr) {
               (or any other open lists of autocompleted values:*/
               closeAllLists();
           });
-          a.appendChild(b);
+          if(a.childElementCount < 5){
+          	a.appendChild(b);
+          }
         }
       }
   });
