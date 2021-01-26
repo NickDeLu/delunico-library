@@ -66,11 +66,9 @@ public class HomeController {
 		auth = resetAuthentication(auth);
 		if(auth != null) {
 			String userName = auth.getName();
-			System.out.println(userName);
 			List<Book> books = da.getMyBooks(da.getUser(userName).getId());
 			model.addAttribute("books",books);
 			model.addAttribute("username",userName);
-			System.out.println(books);
 		}
 		model.addAttribute("allbooks",da.allBooks());
 		return "user/myBooks";
@@ -265,7 +263,6 @@ public class HomeController {
 			List<Book> books = da.getMyBooks(da.getUser(auth.getName()).getId());
 			if(books.contains(book)) {
 				model.addAttribute("favourited","favourited");
-				System.out.println("the book was favourited");
 			}
 		}
 		model.addAttribute("allbooks",da.allBooks());
@@ -293,7 +290,6 @@ public class HomeController {
 		user.setId(id);
 		model.addAttribute("allbooks",da.allBooks());
 		try {
-			System.out.println("updated user");
 			da.updateUser(user);
 			
 		}catch(Exception e) {

@@ -326,7 +326,7 @@ section{
 	border-left:10px solid rgb(13, 41, 77);
 	border-right:10px solid rgb(13, 41, 77);
 	padding: 20px 20px 60px 20px;
-
+	position:relative;
 }
 footer{
 	color:white;
