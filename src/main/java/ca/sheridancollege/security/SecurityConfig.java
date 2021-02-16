@@ -63,8 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.exceptionHandling()
 		.accessDeniedHandler(accessDeniedHandler);
 		
-		http.csrf().disable(); //disabling this is not industry standard, allows u to see the console
-		http.headers().frameOptions().disable();
+		http.csrf();
+		http.headers().frameOptions();
 	}
 	
 	@Override
