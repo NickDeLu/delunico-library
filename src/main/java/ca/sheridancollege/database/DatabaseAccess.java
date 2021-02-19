@@ -100,7 +100,6 @@ public class DatabaseAccess {
 		for (Book book : books) {
 			allBooks.add(book.getTitle()); 
 		}
-		System.out.println(allBooks.toString());
 		return allBooks;
 	}
 	/**
@@ -120,7 +119,6 @@ public class DatabaseAccess {
 			.addValue("description", book.getDescription());
 			
 			if(!(book.getImg().isEmpty())) {
-				System.out.println("its not null" + book.getImg());
 				namedParameters.addValue("img", book.getImg());
 				query = "INSERT INTO books (title, author, img, description) VALUES (:title, :author, :img, :description)";
 			}
@@ -198,26 +196,24 @@ public class DatabaseAccess {
 			
 			MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 			String query = 
-					"INSERT INTO reviews (bookId, text, stars, userId, username) VALUES (:bookId, :review, :stars, :userId, :username)";
+					"INSERT INTO reviews (bookId, text, stars, username) VALUES (:bookId, :review, :stars, :username)";
 			namedParameters
 				.addValue("bookId", review.getBookId())
 				.addValue("review", review.getText())
 				.addValue("stars", review.getStars())
-				.addValue("userId", getUser(review.getUsername()).getId())
 				.addValue("username", review.getUsername());
 				
 			jdbc.update(query, namedParameters);
 			
 	}
 	public void addUser(User user) {
-		System.out.println("database access");
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		String query = 
 				"INSERT INTO user_table (username,password,email,enabled) "
 				+ "VALUES (:username, :password, :email, :enabled)";
 		String query2 =
-				"INSERT INTO authorities (userId, username, authority) "
-				+ "VALUES (:userId, :username, :authority)";
+				"INSERT INTO authorities (username, authority) "
+				+ "VALUES (:username, :authority)";
 		
 		namedParameters
 			.addValue("username", user.getUsername())
@@ -227,8 +223,7 @@ public class DatabaseAccess {
 			.addValue("authority", "ROLE_USER");
 
 		jdbc.update(query, namedParameters);
-		
-		namedParameters.addValue("userId", getUser(user.getUsername()).getId());
+
 		jdbc.update(query2, namedParameters);
 		
 	}
@@ -268,23 +263,23 @@ public class DatabaseAccess {
 		}
 		
 	}
-	public void addMyBook(Long bookId, long userId) {
+	public void addMyBook(Long bookId, String username) {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		String query = 
-				"INSERT INTO myBooks (userId,bookId) VALUES (:userId,:bookId)";
+				"INSERT INTO myBooks (username,bookId) VALUES (:username,:bookId)";
 		namedParameters
 			.addValue("bookId", bookId)
-			.addValue("userId", userId);
+			.addValue("username", username);
 			
 		jdbc.update(query, namedParameters);
 		
 	}
-	public List<Book> getMyBooks(long userId) {
+	public List<Book> getMyBooks(String username) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		
-		String query = "SELECT * FROM BOOKS WHERE books.id in (SELECT myBooks.bookid FROM myBooks WHERE userid = :userId)";
+		String query = "SELECT * FROM BOOKS WHERE books.id in (SELECT bookId FROM myBooks WHERE username = :username)";
 		params
-		.addValue("userId", userId);
+		.addValue("username", username);
 		
 		BeanPropertyRowMapper<Book> bookMapper = 
 				new BeanPropertyRowMapper<Book>(Book.class);
@@ -293,13 +288,13 @@ public class DatabaseAccess {
 		
 		return books;	
 	}
-	public void deleteMyBook(Long bookId, long userId) {
+	public void deleteMyBook(Long bookId, String username) {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		String query = 
-				"DELETE FROM myBooks WHERE userId = :userId AND bookid = :bookId";
+				"DELETE FROM myBooks WHERE username = :username AND bookid = :bookId";
 		namedParameters
 			.addValue("bookId", bookId)
-			.addValue("userId", userId);
+			.addValue("username", username);
 
 		jdbc.update(query, namedParameters);
 	}
@@ -309,26 +304,18 @@ public class DatabaseAccess {
 		
 		String query = 
 				"UPDATE user_table SET username = :username, email = :email WHERE id = :userId ";
-		String queryReview = "UPDATE reviews SET username = :username WHERE userId = :userId";
-
-		String queryAuthorities = "UPDATE authorities SET username = :username WHERE userId = :userId ";
 
 		params
 		.addValue("userId", user.getId())
 		.addValue("username", user.getUsername())
 		.addValue("email", user.getEmail());
-		System.out.println(user.getId()+"this is the user ID");
+		
 		if(user.getPassword() !=null) {
-			System.out.println(user.getPassword() + "the password");
 			query = 
 				"UPDATE user_table SET username = :username, "
 				+ "email = :email, password = :password WHERE id = :userId";
 			params.addValue("password", user.getPassword());
 		}
-
-		jdbc.update(queryAuthorities, params);
-
-		jdbc.update(queryReview, params);
 		
 		jdbc.update(query, params);
 		

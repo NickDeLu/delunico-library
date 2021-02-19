@@ -66,7 +66,7 @@ public class HomeController {
 		auth = resetAuthentication(auth);
 		if(auth != null) {
 			String userName = auth.getName();
-			List<Book> books = da.getMyBooks(da.getUser(userName).getId());
+			List<Book> books = da.getMyBooks(userName);
 			model.addAttribute("books",books);
 			model.addAttribute("username",userName);
 		}
@@ -78,7 +78,7 @@ public class HomeController {
 	public String addMyBooks(Model model, @PathVariable Long bookId,Authentication auth) {
 		if(auth != null) {
 			String userName = auth.getName();
-			da.addMyBook(bookId,da.getUser(userName).getId());
+			da.addMyBook(bookId,userName);
 			model.addAttribute("username",userName);
 			return "redirect:/viewBook/" + bookId;
 		}
@@ -88,7 +88,7 @@ public class HomeController {
 	public String deleteMyBooks(Model model, @PathVariable Long bookId,Authentication auth) {
 		if(auth != null) {
 			String userName = auth.getName();
-			da.deleteMyBook(bookId,da.getUser(userName).getId());
+			da.deleteMyBook(bookId,userName);
 			model.addAttribute("username",userName);
 			return "redirect:/viewBook/" + bookId;
 		}
@@ -260,7 +260,7 @@ public class HomeController {
 		model.addAttribute("book", book);
 		if (auth != null) {
 			model.addAttribute("username", auth.getName());
-			List<Book> books = da.getMyBooks(da.getUser(auth.getName()).getId());
+			List<Book> books = da.getMyBooks(auth.getName());
 			if(books.contains(book)) {
 				model.addAttribute("favourited","favourited");
 			}
@@ -293,17 +293,19 @@ public class HomeController {
 			da.updateUser(user);
 			
 		}catch(Exception e) {
-			if(auth!=null)
+			if(auth!=null) {
 				model.addAttribute("user",da.getUser(auth.getName()));
+				model.addAttribute("username",auth.getName());
+			}
+			System.out.println(e.getMessage());
 			model.addAttribute("message","Username already exists! Try again.");
 			return "user/account";
 		}
 		model.addAttribute("user",da.getUser(username));
+		model.addAttribute("username",username);
 		model.addAttribute("message","User details were sucessfully updated");
 		
-		auth = SecurityContextHolder.getContext().getAuthentication();
-		Authentication newAuth = new UsernamePasswordAuthenticationToken(username, auth.getCredentials(),auth.getAuthorities());
-		SecurityContextHolder.getContext().setAuthentication(newAuth);
+		auth = resetAuthentication(auth);
 		return "user/account";
 	}
 	/**

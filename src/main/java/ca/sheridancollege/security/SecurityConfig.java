@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.exceptionHandling()
 		.accessDeniedHandler(accessDeniedHandler);
 		
-		http.csrf();
+		http.csrf().disable();
 		http.headers().frameOptions();
 	}
 	
@@ -82,8 +82,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.usersByUsernameQuery(
                 "select email,password, enabled from user_table where email=?")
         .authoritiesByUsernameQuery(
-                "select user_table.username,authority from authorities inner join user_table on user_table.id=authorities.userid where email=?")
+                "select user_table.username,authority from authorities inner join user_table on user_table.username=authorities.username where email=?")
 		.passwordEncoder(passwordEncoder);//auto injected at the top of page
+		//"select user_table.username,authority from authorities inner join user_table on user_table.id=authorities.userid where email=?"
 	}
 	
 	
