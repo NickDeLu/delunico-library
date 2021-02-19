@@ -305,7 +305,9 @@ public class HomeController {
 		model.addAttribute("username",username);
 		model.addAttribute("message","User details were sucessfully updated");
 		
-		auth = resetAuthentication(auth);
+		Authentication newAuth = new UsernamePasswordAuthenticationToken(username, auth.getCredentials(),auth.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(newAuth);
+		auth = SecurityContextHolder.getContext().getAuthentication();
 		return "user/account";
 	}
 	/**
