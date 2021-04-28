@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/stars.css">
+<script src="../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+<title>Add Review</title>
+
+</head>
+
+<body>
+	<header th:insert="fragments/header.html :: page-header"></header>
+	
+	<div th:insert="fragments/nav.html :: page-nav"></div>
+	
+	<section class ="flex-container">
+		<form name="form" action="#" th:action="@{/submitReview}" method="post"
+		th:object="${review}">
+			<input type="hidden" th:value="${username}" th:attr="name = 'username'" hidden=>
+			<input type="hidden" th:value="${book.id}" th:attr="name = 'bookId'" hidden=>
+			
+			<p>
+				<div class ="stars">
+					<input class="star star-5" id="star-5" type="radio" th:value="5" th:field="*{stars}" required/>
+					<label class="star star-5" for="star-5"></label>
+					<input class="star star-4" id="star-4" type="radio" th:value="4" th:field="*{stars}" />
+					<label class="star star-4" for="star-4"></label>
+					<input class="star star-3" id="star-3" type="radio" th:value="3" th:field="*{stars}" />
+					<label class="star star-3" for="star-3"></label>
+					<input class="star star-2" id="star-2" type="radio" th:value="2" th:field="*{stars}" />
+					<label class="star star-2" for="star-2"></label>
+					<input class="star star-1" id="star-1" type="radio" th:value="1" th:field="*{stars}" />
+					<label class="star star-1" for="star-1"></label>
+				</div>
+			</p>
+			<p>
+				<textarea maxlength="200" th:field="*{text}" placeholder="enter your review... (max 200 characters)" required></textarea>
+			</p>
+			<p>
+				<input type="submit" value="Add Review">
+			</p>
+		</form>
+	</section>
+</body>
+<div th:insert="fragments/footer.html :: page-footer"></div>
+</html>

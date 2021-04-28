@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:image" content="https://lh3.googleusercontent.com/d/1Lbln3FzkHKtoIATFl2yD7H4kKq9alBjj">
+<meta property="og:title" content="Concierge Kart">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://concierge-kart.com">
+<link rel="icon" type="img/png" sizes="50x50" href="/img/favicon.png">
+<script src="../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Home</title>
+
+</head>
+<body>
+	<header th:insert="fragments/header.html :: page-header"></header>
+	<div th:insert="fragments/nav.html :: page-nav"></div>
+	
+	<section th:unless="${books.empty}">
+		<div th:if="${message}" class="error" align="center">
+			<h2 th:text="${message}"></h2>
+		</div>
+		<div class ="flex-container">
+			
+			<div th:if="${books.empty}">
+				<h2 th:text="|There are no books!|">The database is empty!</h2>
+			</div>
+			<div class ="flex-container2" th:each="book : ${books}">
+				<p><a href ="" th:href="@{/viewBook/} + ${book.id}"><img class ="book-cover" th:src="@{${book.img}}"></a></p>
+				<div class ="book-details">
+					<p>
+						<div class ="twoline">
+							<h3>
+								<a href ="" th:href="@{/viewBook/} + ${book.id}" 
+								th:text="${book.title}"></a>
+							</h3>
+						</div>
+						<p class="oneline" th:text="|By: ${book.author}|"></p>
+						<div class ="starcontainer">
+							<p th:text="|${book.aveStars} stars|">jonny937</p>
+							<img src ="/img/stars.png">
+							<div class ="starbar" th:style="|width: calc(20% * ${book.aveStars})|"></div>
+						</div>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+<div th:insert="fragments/footer.html :: page-footer"></div>
+</html>

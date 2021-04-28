@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Add Book</title>
+<link rel="stylesheet" href="/css/main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+</head>
+
+<body>
+	<header th:insert="fragments/header.html :: page-header"></header>
+	
+	<div th:insert="fragments/nav.html :: page-nav"></div>
+	<section class ="flex-container">
+		<form name="form" action="#" th:action="@{/admin/addBook}"
+		method="post" th:object ="${book}">
+
+			<p>
+				<input type="text" th:field=*{title} placeholder="Enter Title" required>
+			</p>
+	
+			<p>
+				<input type="text" th:field=*{author} placeholder="Enter Author" required>
+			</p>
+			
+			<p>
+				<input type="text" th:field=*{description} placeholder="Enter description" required>
+			</p>
+			
+			<p>
+				<input type="text" th:field=*{img} placeholder="Enter Img URL">
+			</p>
+	
+			<p>
+				<input type="submit" value="Add Book">
+			</p>
+
+		</form>
+	</section>
+</body>
+<div th:insert="fragments/footer.html :: page-footer"></div>
+</html>

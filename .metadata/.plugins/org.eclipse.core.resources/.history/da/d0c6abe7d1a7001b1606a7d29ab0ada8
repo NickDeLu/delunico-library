@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/main.css">
+<script src="../static/js/nav.js" th:src="@{/js/nav.js}"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:image" content="https://lh3.googleusercontent.com/d/1rVVMibobpKhKB-aCTz6A3tTSFZsvkNMv">
+<meta property="og:title" content="elibrary">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://delunico-library.herokuapp.com/">
+<link rel="icon" type="img/png" sizes="50x50" href="/img/favicon.png">
+<title>Log In</title>
+
+</head>
+<body>
+	<header th:insert="fragments/header.html :: page-header"></header>
+	
+	<div th:insert="fragments/nav.html :: page-nav"></div>
+	
+	<section class ="flex-container">
+		
+		<form action="#" th:action="@{/recover}" method="post" >
+			<h1>Enter your account email to receive a new password</h1>
+			<div th:if="${message}" class="error">
+				<h1 th:text="${message}"></h1>
+			</div>
+			<p>
+				<input type="text" name="email" placeholder="Enter Email"required />
+			</p>
+			<input type="submit" value="login">
+		</form>
+	</section>
+</body>
+<div th:insert="fragments/footer.html :: page-footer"></div>
+</html>
