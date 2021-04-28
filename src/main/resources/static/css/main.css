@@ -2,6 +2,9 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
 html{
 	background-color: rgb(1, 55, 102);
+	 zoom: 1.25; 
+	-moz-transform: scale(1.25); 
+    -moz-transform-origin: 0 0;  
 }
 header {
 	height:100px;
@@ -81,6 +84,7 @@ textarea {
 	padding: 20px 0px 20px 0px;
 	width:95%;
 	max-width:500px;
+	box-shadow: -8px 8px 10px grey;
 }
 .flex-container form input{
 	width:80%;	
@@ -194,7 +198,12 @@ h2 a, input[type="submit"]{
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
-@media screen and (max-width:760px){
+@media screen and (max-width:900px){
+	html{
+		zoom: 1; 
+		-moz-transform: scale(1); 
+    	-moz-transform-origin: 0 0;  
+	}
 	.topnav a:not(:last-child){
 		opacity:0;
 		transform: translateY(-2em);
