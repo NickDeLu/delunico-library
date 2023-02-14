@@ -342,7 +342,7 @@ public class HomeController {
 	@GetMapping("register")
 	public String register(Model model) {
 		List<String> authorities = da.getAuthorities();
-		model.addAttribute("userAuthority", authorities.get(0));
+		model.addAttribute("userAuthority", "ROLE_USER");
 		model.addAttribute("allbooks",da.allBooks());
 		return "register";
 	}
