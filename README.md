@@ -29,7 +29,7 @@ This ebooks web application is designed to display information about all differe
 </ul>
 
 ## Hosting
-The project Spring Boot app was both hosted on railway.app configured with a CICD automatic deploys connected to this repository's master branch.
+The project Spring Boot app was both hosted on railway.app configured with a CICD automatic deploys connected to this repository's main branch.
 
 ## Database
 This postgreSQL database was also deployed by railway.app and integrated with the spring app. Passwords are hash encrypted. Data is normalized to level 3. 
